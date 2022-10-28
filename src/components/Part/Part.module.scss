@@ -1,0 +1,22 @@
+.part {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+
+  width: 100%;
+  padding-left: 16px;
+}
+
+.label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+}
+
+.ball {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+}

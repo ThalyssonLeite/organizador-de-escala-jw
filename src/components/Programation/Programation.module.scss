@@ -1,0 +1,37 @@
+.programation {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  margin: 20px 0;
+  font-size: 32px;
+}
+
+.divisor {
+  height: 8px;
+  border: 0;
+  border-top: 4px solid #666666;
+  border-bottom: 2px solid #666666;
+
+  margin-bottom: 20px;
+}
+
+.treasuresSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #626262;
+  font-size: 24px;
+}
+
+.ministrySection {
+  @extend .treasuresSection;
+  color: #9d5d07;
+}
+
+.cristianSection {
+  @extend .treasuresSection;
+  color: #942926;
+}

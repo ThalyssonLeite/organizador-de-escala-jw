@@ -1,24 +1,49 @@
-import { NextApiRequest, NextApiResponse } from "next";
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { Browser, Page } from 'puppeteer-core';
+import { disconectBrowser } from './_lib/chrome';
+import { getLinkFromBrowser, getProgramationFromBrowser } from './_lib/handlers';
 import initializeBrowser from './_lib/initializeBrowser';
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const url: any = req.query.url || '';
-
-  try {
-    const {browser, page} = await initializeBrowser(url);
-
-    const data = await page.evaluate(() => {
-
-      return document.body.innerHTML;
-    });
-
-    browser.close();
-
-    res.status(200).json({ html: data });
-  } catch (e) {
-    console.log(JSON.stringify(url))
-    res.status(400).end();
-  };
+export type IDataProgramationLink = {
+  songs: (string | undefined)[];
+  week: string;
+  weekExcerpt: string;
+  treasures: string;
+  ministry: {
+      title: string | null;
+      time: string;
+  }[];
+  cristianLife: string[];
 };
 
-export default handler;
+export default async function handler(req: NextApiRequest, res: NextApiResponse<IDataProgramationLink>) {
+  const url = 'https://wol.jw.org/pt';
+  let browser;
+  let page: Page;
+  
+  try {
+    //FIRST CALL TO PUPPETEER
+    let lauchedBrowser = await initializeBrowser(url);
+    browser = lauchedBrowser.browser;
+    page = lauchedBrowser.page;
+
+    const date: any = req.query.date;
+
+    const link = await page.evaluate(getLinkFromBrowser, date);
+
+    //SECOND CALL TO PUPPETEER
+    await page.goto(link);
+
+    const data = await page.evaluate(getProgramationFromBrowser, date);
+
+    disconectBrowser();
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+    if (browser) disconectBrowser();
+
+    res.status(400).end();
+  } 
+};

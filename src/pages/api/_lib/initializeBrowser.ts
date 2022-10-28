@@ -7,11 +7,8 @@ export interface ILaunchedBrowser {
   page: Page,
 }
 
-let browser: Browser;
-
 async function handler (url: string): Promise<ILaunchedBrowser> {
-  if (!browser) browser = await newBrowser();
-
+  const browser = await newBrowser();
   const page = await browser.newPage();
   await page.setUserAgent(userAgent);
   await page.goto(url);

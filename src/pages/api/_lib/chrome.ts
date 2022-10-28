@@ -2,11 +2,18 @@ import puppeteer, { Browser } from 'puppeteer-core';
 import getOptions from './chromeOptions';
 
 export const url = 'https://wol.jw.org/pt/wol/h/r5/lp-t';
+
+let browser: Browser;
+
+export function disconectBrowser() {
+  if (browser && browser.isConnected()) browser.close();
+};
+
 export default async function newBrowser(): Promise<Browser> {
   const isDev = !process.env.AWS_REGION;
-
   const options = await getOptions(isDev);
-  const browser = puppeteer.launch(options);
+
+  if (!browser || !browser.isConnected()) browser = await puppeteer.launch(options);
 
   return browser;
 };

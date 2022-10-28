@@ -1,26 +1,33 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
+import Programation from '../components/Programation/Programation';
 
-import { IDataProgramationLink } from './api/programation-link';
+import { IDataProgramationLink } from './api/programation-data';
 
 async function crawlDataFromJW(date: Date) {
-  const resLink = await fetch(`http://localhost:3000/api/programation-link?date=${date}`);
-  const dataLink: IDataProgramationLink = await resLink.json();
+  const resData = await fetch(`api/programation-data?date=${date}`);
+  const dataProgamation: IDataProgramationLink = await resData.json();
 
-  const resData = await fetch(`http://localhost:3000/api/programation-data?url=${dataLink.link}`);
-  const dataProgamation = await resData.json();
+  console.log(dataProgamation);
 
-  return dataProgamation.html;
+  return dataProgamation;
 };
 
 const Home: NextPage = () => {
-  const $div: any = useRef(null);
   const selectedDate = new Date();
+  const [data, useData] = useState<any>(null);
 
-  useEffect(() => {
-    crawlDataFromJW(selectedDate).then(d => $div.current.innerHTML = d)
-  }, []);
+  // useEffect(() => {
+  //   crawlDataFromJW(selectedDate).then(d => useData(d));
+  // }, []);
+
+  const selectDate = async (e: any) => {
+    console.log(e.nativeEvent)
+
+    const data = await crawlDataFromJW(e.currentTarget.valueAsDate);
+    useData(data);
+  };
 
   return (
     <div>
@@ -30,8 +37,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <input type="date" onChange={selectDate}/>
 
-      <div ref={$div}></div>
+      <Programation data={data}/>
     </div>
   )
 }
