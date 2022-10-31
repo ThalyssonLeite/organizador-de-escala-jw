@@ -13,7 +13,20 @@ export default async function newBrowser(): Promise<Browser> {
   const isDev = !process.env.AWS_REGION;
   const options = await getOptions(isDev);
 
-  if (!browser || !browser.isConnected()) browser = await puppeteer.launch(options);
+  try {
+    if (!browser || !browser.isConnected()) browser = await puppeteer.launch(options);
+  } catch (error) {
+    const isOnWindows = process.platform === 'win32';
+    const alternativePathForChrome = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe';
+
+    if (isOnWindows) {
+      options.executablePath = alternativePathForChrome;
+
+      if (!browser || !browser.isConnected()) browser = await puppeteer.launch(options);
+    }
+
+    else throw error;
+  }
 
   return browser;
 };

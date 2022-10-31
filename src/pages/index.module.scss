@@ -1,6 +1,16 @@
+.appWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
 .programationWrapper  {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  gap: 50px;
 
   margin-bottom: 80px;
 }

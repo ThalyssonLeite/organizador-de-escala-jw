@@ -2,22 +2,27 @@ import Image from "next/future/image";
 import Part from "../Part/Part";
 import S from './Programation.module.scss';
 
-import treasuresImg from 'public/diamond.png';
-import ministryImg from 'public/wheat.png';
-import cristianImg from 'public/sheep.png';
+import treasuresImg from 'public/static/icons/diamond.png';
+import ministryImg from 'public/static/icons/wheat.png';
+import cristianImg from 'public/static/icons/sheep.png';
 
 interface IProps {
-  data: any
+  data: any;
+  index: number;
 }
 
 function Programation(props: IProps) {
 
-  if (!props.data) return null;
-  
   return (
     <div className={S.wrapper}>
-       <h1 className={S.title}>Programação da Reunião do Meio de Semana</h1>
-      <hr className={S.divisor}/>
+      {!props.index && 
+        <>
+          <h1 className={S.title}>
+            Programação da Reunião do Meio de Semana
+          </h1>
+          <hr className={S.divisor}/>
+        </>
+      }
 
       <div className={S.programation}>
         <div className={S.week}>
