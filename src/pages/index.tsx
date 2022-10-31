@@ -18,21 +18,34 @@ async function crawlDataFromJW(date: Date) {
 };
 
 const Home: NextPage = () => {
-  const [data, setData] = useState<any>(null);
+  const localStorageKey = 'weeks';
+
+
   const [weeks, setWeeks] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const weeksStored = JSON.parse(localStorage.getItem(localStorageKey) || '[]');
+
+    if (!weeksStored.length) return;
+
+    setWeeks(weeksStored);
+  }, []);
 
   const onSelectDate = async (date: Date) => {
     setLoading(true);
 
     const data = await crawlDataFromJW(date);
-    setData(data);
     setLoading(false);
 
-    setWeeks([
+    const newWeeks = [
       ...weeks,
       {programation: data, date}
-    ])
+    ];
+
+
+    localStorage.setItem(localStorageKey, JSON.stringify(newWeeks));
+    setWeeks(newWeeks);
   };
 
   const onDeleteWeek = (i: number) => () => {
