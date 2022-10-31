@@ -11,12 +11,47 @@
 .label {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
+
+  max-width: 345px;
 }
 
 .ball {
+  flex-shrink: 0;
   width: 8px;
   height: 8px;
   border-radius: 8px;
+
+  margin-top: 6px;
+}
+
+.participant {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+}
+
+.participantType {
+  color: #605f63;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.input {
+  font-size: 14px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid grey;
+  box-sizing: border-box;
+  padding: 4px 8px;
+  min-width: 170px;
+  max-width: 170px;
+
+  &.isFilled {
+    border: none;
+    padding: 0px;
+    margin-top: 5px;
+  }
 }

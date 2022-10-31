@@ -1,3 +1,7 @@
+.wrapper {
+  max-width: 700px;
+}
+
 .programation {
   display: flex;
   flex-direction: column;
@@ -15,7 +19,7 @@
   border-top: 4px solid #666666;
   border-bottom: 2px solid #666666;
 
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .treasuresSection {
@@ -23,12 +27,12 @@
   align-items: center;
   gap: 16px;
   color: #626262;
-  font-size: 24px;
+  font-size: 28px;
 }
 
 .ministrySection {
   @extend .treasuresSection;
-  color: #9d5d07;
+  color: #c38439;
 }
 
 .cristianSection {

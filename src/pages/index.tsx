@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Programation from '../components/Programation/Programation';
+import S from './index.module.scss';
 
 import { IDataProgramationLink } from './api/programation-data';
 
@@ -39,7 +41,9 @@ const Home: NextPage = () => {
 
       <input type="date" onChange={selectDate}/>
 
-      <Programation data={data}/>
+      <div className={S.programationWrapper}>
+        <Programation data={data}/>
+      </div>
     </div>
   )
 }

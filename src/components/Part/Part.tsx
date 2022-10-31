@@ -22,7 +22,7 @@ function Part(props: IProps) {
   if (isTreasures) {
     color = '#626262';
   } else if (isMinistry) {
-    color = '#9d5d07';
+    color = '#c38439';
   } else if (isCristian) {
     color = '#942926';
   } else {
@@ -39,7 +39,21 @@ function Part(props: IProps) {
     label = 'Estudante:'
   } else if (isStudy) {
     label = 'Dirigente/Leitor:'
-  }
+  };
+
+  const onBlur = (e: any) => {
+    const $target = e.currentTarget;
+    const hasSomethingInIt = $target.innerHTML.length;
+    const classListMethod = hasSomethingInIt ? "add" : "remove";
+    $target.classList[classListMethod](S.isFilled);
+  };
+
+  const participant = (
+  <div className={S.participant}>
+    <span className={S.participantType}>{label}</span> 
+    <div contentEditable spellCheck="false" className={S.input} onBlur={onBlur}></div>
+  </div>
+  )
 
   return (
     <div className={S.part}>
@@ -47,9 +61,8 @@ function Part(props: IProps) {
         <div className={S.ball} style={{ background: color }}></div> { props.children || props.text}
       </div>
 
-      <div className={S.participants}>
-        {label} <input type="text" />
-      </div>
+      {!search("cântico") && participant}
+      
     </div>
   );
 }
