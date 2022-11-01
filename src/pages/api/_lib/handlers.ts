@@ -20,7 +20,7 @@ function getLinkFromBrowser (date: string)  {
 };
 
 function getProgramationFromBrowser () {
-  const removeDirt = (text: string | null | undefined) => (text || '').replaceAll(/\“|\”|\:/g, '');
+  const removeDirt = (text: string | null | undefined) => (text || '').replaceAll(/\:/g, '').trim();
   const getTextFrom = (query: string) => removeDirt(document.querySelector(query)?.textContent || '');
   const getManyTexstFrom = (query: string) => Array.from(document.querySelectorAll(query))?.map(node => removeDirt(node.textContent || ''))?.filter(text => text);
   const getChildrenFrom = (query: string) => Array.from(document.querySelector(query)?.children || []);

@@ -43,6 +43,7 @@ function WeeksManager(props: IProps) {
               { addWeekState &&
                 <DatePicker
                   onChange={onSelectDate}
+                  minDate={new Date('01/01/2016')}
                   inline
                 />}
             </div>

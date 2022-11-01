@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import S from './Part.module.scss';
 
 interface IProps {
@@ -8,7 +9,7 @@ interface IProps {
 }
 
 function Part(props: IProps) {
-  function search(string: string) {
+  const search = (string: string) => {
     return props.text?.toLowerCase().includes(string);
   };
 
@@ -32,6 +33,7 @@ function Part(props: IProps) {
   const isPrayer = search('cântico') && (isTreasures || isCristian) && !props.doNotPray;
   const isStudent = search('leitura da bíblia') || isMinistry && !search('vídeo');
   const isStudy = search('estudo bíblico de congregação');
+  const isPresident = search(' | ');
 
   if (isPrayer) {
     label = 'Oração:'
@@ -39,11 +41,13 @@ function Part(props: IProps) {
     label = 'Estudante:'
   } else if (isStudy) {
     label = 'Dirigente/Leitor:'
-  };
+  } else if (isPresident) {
+    label = 'Presidente:'
+  }
 
   const onBlur = (e: any) => {
-    const $target = e.currentTarget;
-    const hasSomethingInIt = $target.innerHTML.length;
+    const $target = e.currentTarget.closest('.'+S.participant);
+    const hasSomethingInIt = e.currentTarget.innerHTML.length;
     const classListMethod = hasSomethingInIt ? "add" : "remove";
     $target.classList[classListMethod](S.isFilled);
   };
@@ -53,12 +57,14 @@ function Part(props: IProps) {
     <span className={S.participantType}>{label}</span> 
     <div contentEditable spellCheck="false" className={S.input} onBlur={onBlur}></div>
   </div>
-  )
+  );
+
+  const ball = (<div className={S.ball} style={{ background: color }}/>);
 
   return (
     <div className={S.part}>
-      <div className={S.label}>
-        <div className={S.ball} style={{ background: color }}></div> { props.children || props.text}
+      <div className={classNames(S.label, {[S.isPresident]: isPresident})}>
+         {!isPresident && ball} { props.children || props.text}
       </div>
 
       {!search("cântico") && participant}

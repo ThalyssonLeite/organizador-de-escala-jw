@@ -7,6 +7,15 @@ import S from './index.module.scss';
 
 import { IDataProgramationLink } from './api/programation-data';
 import WeeksManager from '../components/WeeksManager/WeeksManager';
+import axios from 'axios';
+
+export function getStaticProps () {
+  axios.get('');
+
+  return {
+    props: {}
+  }
+};
 
 async function crawlDataFromJW(date: Date) {
   const resData = await fetch(`api/programation-data?date=${date}`);
@@ -19,7 +28,6 @@ async function crawlDataFromJW(date: Date) {
 
 const Home: NextPage = () => {
   const localStorageKey = 'weeks';
-
 
   const [weeks, setWeeks] = useState<any>([]);
   const [loading, setLoading] = useState(false);

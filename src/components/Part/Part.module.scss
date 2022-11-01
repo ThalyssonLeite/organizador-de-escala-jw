@@ -15,6 +15,10 @@
   gap: 6px;
 
   max-width: 345px;
+
+  &.isPresident {
+    max-width: unset;
+  }
 }
 
 .ball {
@@ -31,6 +35,17 @@
   align-items: flex-start;
   justify-content: center;
   gap: 6px;
+
+  &.isFilled {
+    .participantType {
+      margin-top: 0;
+    }
+
+    .input {
+      border: none;
+      padding: 0px;
+    }
+  }
 }
 
 .participantType {
@@ -48,10 +63,4 @@
   padding: 4px 8px;
   min-width: 170px;
   max-width: 170px;
-
-  &.isFilled {
-    border: none;
-    padding: 0px;
-    margin-top: 5px;
-  }
 }

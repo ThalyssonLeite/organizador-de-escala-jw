@@ -25,9 +25,7 @@ function Programation(props: IProps) {
       }
 
       <div className={S.programation}>
-        <div className={S.week}>
-          {props.data.week} | {props.data.weekExcerpt}
-        </div>
+        <Part text={`${props.data.week} | ${props.data.weekExcerpt}`}/>
 
         <Part text={props.data.songs[0]}/>
         <Part text="Comentários iniciais">

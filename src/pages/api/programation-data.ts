@@ -14,7 +14,10 @@ export type IDataProgramationLink = {
       title: string | null;
       time: string;
   }[];
-  cristianLife: string[];
+  cristianLife: {
+    title: string,
+    time: string
+  }[];
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<IDataProgramationLink>) {
