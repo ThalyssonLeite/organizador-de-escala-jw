@@ -9,6 +9,7 @@ interface IProps {
   setWeek: (week: any) => any;
   loading: boolean;
   removeWeek: (index: number) => any;
+  maxDate?: Date;
 }
 
 function WeeksManager(props: IProps) {
@@ -44,6 +45,7 @@ function WeeksManager(props: IProps) {
                 <DatePicker
                   onChange={onSelectDate}
                   minDate={new Date('01/01/2016')}
+                  maxDate={props.maxDate}
                   inline
                 />}
             </div>

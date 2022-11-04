@@ -9,14 +9,6 @@ import { IDataProgramationLink } from './api/programation-data';
 import WeeksManager from '../components/WeeksManager/WeeksManager';
 import axios from 'axios';
 
-export function getStaticProps () {
-  axios.get('');
-
-  return {
-    props: {}
-  }
-};
-
 async function crawlDataFromJW(date: Date) {
   const resData = await fetch(`api/programation-data?date=${date}`);
   const dataProgamation: IDataProgramationLink = await resData.json();
@@ -26,11 +18,21 @@ async function crawlDataFromJW(date: Date) {
   return dataProgamation;
 };
 
-const Home: NextPage = () => {
+async function getMaxDateForWorkBooks(callback: (date: Date) => void) {
+  const res = await fetch('api/find-final-date');
+  const maxWorkbookDate = await res.text();
+
+  console.log(maxWorkbookDate)
+
+  return callback(new Date(maxWorkbookDate));
+};
+
+const Home: NextPage = (props: any) => {
   const localStorageKey = 'weeks';
 
   const [weeks, setWeeks] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+  const [maxDate, setMaxDate] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
     const weeksStored = JSON.parse(localStorage.getItem(localStorageKey) || '[]');
@@ -38,6 +40,10 @@ const Home: NextPage = () => {
     if (!weeksStored.length) return;
 
     setWeeks(weeksStored);
+  }, []);
+
+  useEffect(() => {
+    getMaxDateForWorkBooks(setMaxDate);
   }, []);
 
   const onSelectDate = async (date: Date) => {
@@ -75,6 +81,7 @@ const Home: NextPage = () => {
         setWeek={onSelectDate}
         loading={loading}
         removeWeek={onDeleteWeek}
+        maxDate={maxDate}
       />
 
       <div className={S.programationWrapper}>
