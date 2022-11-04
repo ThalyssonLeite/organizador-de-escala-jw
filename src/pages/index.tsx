@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Programation from '../components/Programation/Programation';
 import S from './index.module.scss';
 
 import { IDataProgramationLink } from './api/programation-data';
 import WeeksManager from '../components/WeeksManager/WeeksManager';
 import axios from 'axios';
+import domToPdf from 'dom-to-pdf';
+import classNames from 'classnames';
 
 async function crawlDataFromJW(date: Date) {
   const resData = await fetch(`api/programation-data?date=${date}`);
@@ -68,6 +70,28 @@ const Home: NextPage = (props: any) => {
     setWeeks(_weeks);
   };
 
+  
+  const $wrapper = useRef<any>(null);
+
+  const downloadAsPDF = async (e: any) => {
+    const width = 595.28;
+    const height = 841.89;
+    const $node = $wrapper.current;
+    const options = {
+      style: {
+        minWidth: width,
+        maxWidth: 'unset'
+      },
+      overrideWidth: 1000
+    };
+
+    $node.classList.add(S.toPrint);
+
+    domToPdf($node, options, (pdf: any) => {
+      $node.classList.remove(S.toPrint);
+    })
+  }
+
   return (
     <div className={S.appWrapper}>
       <Head>
@@ -84,16 +108,20 @@ const Home: NextPage = (props: any) => {
         maxDate={maxDate}
       />
 
-      <div className={S.programationWrapper}>
-        {weeks.map((data: any, i: number) => {
-          return (
-          <Programation
-            key={data.date}
-            index={i}
-            data={data.programation}
-          />)
-        })}
-      </div>
+        <div className={S.programationWrapper} ref={$wrapper}>
+          {weeks.map((data: any, i: number) => {
+            return (
+              <Programation
+                key={data.date}
+                index={i}
+                data={data.programation}
+                className={classNames({bordered: i % 2 !== 0})}
+              />
+            )
+          })}
+        </div>
+
+      <button onClick={downloadAsPDF}>Salvar</button>
     </div>
   )
 }

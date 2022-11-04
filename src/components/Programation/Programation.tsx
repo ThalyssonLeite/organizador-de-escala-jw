@@ -1,29 +1,17 @@
-import Image from "next/future/image";
+import classNames from "classnames";
 import Part from "../Part/Part";
 import S from './Programation.module.scss';
-
-import treasuresImg from 'public/static/icons/diamond.png';
-import ministryImg from 'public/static/icons/wheat.png';
-import cristianImg from 'public/static/icons/sheep.png';
 
 interface IProps {
   data: any;
   index: number;
+  className: any
 }
 
 function Programation(props: IProps) {
 
   return (
-    <div className={S.wrapper}>
-      {!props.index && 
-        <>
-          <h1 className={S.title}>
-            Programação da Reunião do Meio de Semana
-          </h1>
-          <hr className={S.divisor}/>
-        </>
-      }
-
+    <div className={classNames(S.wrapper, props.className)}>
       <div className={S.programation}>
         <Part text={`${props.data.week} | ${props.data.weekExcerpt}`}/>
 
@@ -33,13 +21,7 @@ function Programation(props: IProps) {
         </Part>
 
         <div className={S.treasuresSection}>
-          <Image
-            src={treasuresImg}
-            width={56}
-            height={56}
-            className={S.treasuresSectionBall}
-            alt="Tesouros"
-          />
+          
           TESOUROS DA PALAVRA DE DEUS
         </div> 
 
@@ -54,12 +36,6 @@ function Programation(props: IProps) {
         </Part>
 
         <div className={S.ministrySection}>
-          <Image
-            src={ministryImg}
-            width={56}
-            height={56}
-            alt="Ministério"
-          />
           FAÇA SEU MELHOR NO MINISTÉRIO
         </div> 
 
@@ -72,12 +48,6 @@ function Programation(props: IProps) {
         })}
 
         <div className={S.cristianSection}>
-          <Image
-            src={cristianImg}
-            width={56}
-            height={56}
-            alt="Cristã"
-          />
           NOSSA VIDA CRISTÃ
         </div> 
 

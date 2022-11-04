@@ -1,12 +1,18 @@
+.wrapper {
+  width: 100%;
+  padding: 12.5px 20px;
+} 
+
 .programation {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
 }
 
 .title {
   margin: 20px 0;
   font-size: 32px;
+  text-align: center;
 }
 
 .divisor {
@@ -24,14 +30,59 @@
   gap: 16px;
   color: #626262;
   font-size: 28px;
+
+  &::before {
+    content: "\e65c";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 56px;
+    width: 56px;
+
+    font: 400 40px 'jw-icons-external';
+    color: #fff;
+    line-height: 40px;
+    background: #626262;
+  }
 }
 
 .ministrySection {
   @extend .treasuresSection;
   color: #c38439;
+
+  &::before {
+    content: "\e6bb";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 56px;
+    width: 56px;
+
+    font: 400 40px 'jw-icons-external';
+    color: #fff;
+    line-height: 40px;
+    background: #c38439;
+  }
 }
 
 .cristianSection {
   @extend .treasuresSection;
   color: #942926;
+
+  &::before {
+    content: "\e6ec";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 56px;
+    width: 56px;
+
+    font: 400 40px 'jw-icons-external';
+    color: #fff;
+    line-height: 40px;
+    background: #942926;
+  }
 }

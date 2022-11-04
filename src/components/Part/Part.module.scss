@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 18px;
+  gap: 30px;
 
   width: 100%;
   padding-left: 16px;
@@ -14,7 +14,7 @@
   align-items: flex-start;
   gap: 6px;
 
-  max-width: 345px;
+  font-size: 16px;
 
   &.isPresident {
     max-width: unset;
@@ -36,6 +36,8 @@
   justify-content: center;
   gap: 6px;
 
+  font-size: 16px;
+
   &.isFilled {
     .participantType {
       margin-top: 0;
@@ -50,8 +52,11 @@
 
 .participantType {
   color: #605f63;
-  font-size: 14px;
   margin-top: 5px;
+
+  & strong {
+    color: black;
+  }
 }
 
 .input {
@@ -63,4 +68,5 @@
   padding: 4px 8px;
   min-width: 170px;
   max-width: 170px;
+  font-size: 16px;
 }

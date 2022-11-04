@@ -54,7 +54,12 @@ function Part(props: IProps) {
 
   const participant = (
   <div className={S.participant}>
-    <span className={S.participantType}>{label}</span> 
+    <span className={S.participantType}>
+      {isPresident
+        ? <strong>{label}</strong>
+        : label
+      }
+    </span> 
     <div contentEditable spellCheck="false" className={S.input} onBlur={onBlur}></div>
   </div>
   );
