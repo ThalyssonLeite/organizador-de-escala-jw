@@ -99,6 +99,7 @@
     .input {
       border: none;
       padding: 0px;
+      min-width: initial;
     }
   }
 }
@@ -124,6 +125,7 @@
 
   &.isEmpty + .input.isFilled {
     margin-top: 5px;
+    min-width: initial;
   }
 }
 
@@ -134,7 +136,7 @@
   border: 1px solid grey;
   box-sizing: border-box;
   padding: 4px 8px;
-  min-width: 90px;
+  min-width: 120px;
   max-width: 170px;
   font-size: 16px;
   transition: 300ms ease;
