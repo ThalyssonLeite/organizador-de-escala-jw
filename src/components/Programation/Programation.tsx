@@ -6,44 +6,42 @@ interface IProps {
   data: any;
   index: number;
   className: any
+  onWriteData: (data: any) => void;
 }
 
 function Programation(props: IProps) {
+  
+  const onWriteData = (path: string, index: number = 0, type: string, text: string) => {
+    const data = {...props.data};
+
+    data[path][index][type] = text;
+    props.onWriteData(data);
+  };
 
   return (
-    <div className={classNames(S.wrapper, props.className)}>
-      <div className={S.programation}>
-        <Part text={`${props.data.week} | ${props.data.weekExcerpt}`}/>
+    <div className={classNames(S.programation, props.className)}>
+        <Part data={{ title: `${props.data.week[0].title} | ${props.data.weekExcerpt[0].title}`}} doNotEditLabel={true} onWriteData={onWriteData}/>
 
-        <Part text={props.data.songs[0]}/>
-        <Part text="Comentários iniciais">
-          <span>Comentários iniciais <small>(1 min)</small></span>
-        </Part>
+        <Part path="songs" data={props.data.songs[0]} onWriteData={onWriteData}/>
+        <Part path="comments" data={props.data.comments[0]} onWriteData={onWriteData}/>
 
         <div className={S.treasuresSection}>
-          
           TESOUROS DA PALAVRA DE DEUS
         </div> 
 
-        <Part text={props.data.treasures}>
-          <span>{props.data.treasures} <small>(10 min)</small></span>
-        </Part>
-        <Part text="Joias espirituais">
-          <span>Joias espirituais <small>(10 min)</small></span>
-        </Part>
-        <Part text="Leitura da Bíblia">
-          <span>Leitura da Bíblia <small>(4 min)</small></span>
-        </Part>
+        {props.data.treasures.map((part: any, i: number) => {
+          return (
+            <Part key={part.title} path="treasures" index={i} data={part} onWriteData={onWriteData}/>
+          )
+        })}
 
         <div className={S.ministrySection}>
           FAÇA SEU MELHOR NO MINISTÉRIO
         </div> 
 
-        {props.data.ministry.map((part: any) => {
+        {props.data.ministry.map((part: any, i: number) => {
           return (
-            <Part key={part.title} text={`${part.title} ${part.time}`}type="ministry">
-              <span>{part.title} <small>{part.time}</small></span>
-            </Part>
+            <Part key={part.title} path="ministry" index={i} data={part} section="ministry" onWriteData={onWriteData}/>
           )
         })}
 
@@ -51,21 +49,16 @@ function Programation(props: IProps) {
           NOSSA VIDA CRISTÃ
         </div> 
 
-        <Part type="cristian" text={props.data.songs[1]} doNotPray={true}/>
+        <Part path="songs" index={1} data={props.data.songs[1]} doNotPray={true} section='cristianLife' onWriteData={onWriteData}/>
 
-        {props.data.cristianLife.map((part: any) => {
+        {props.data.cristianLife.map((part: any, i: number) => {
           return (
-            <Part type="cristian" text={`${part.title} ${part.time}`}key={part.title}>
-              <span>{part.title} <small>{part.time}</small></span>
-            </Part>
+            <Part path="cristianLife" index={i} data={part} key={part.title} section='cristianLife' onWriteData={onWriteData}/>
           )
         })}
 
-        <Part type="cristian" text="Comentários finais">
-          <span>Comentários finais <small>(3 min)</small></span>
-        </Part>
-        <Part type="cristian" text={props.data.songs[2]}/>
-      </div>
+        <Part path="comments" index={1} data={props.data.comments[1]} section='cristianLife' onWriteData={onWriteData}/>
+        <Part path="songs" index={2} data={props.data.songs[2]} section='cristianLife' onWriteData={onWriteData}/>
     </div>
   );
 }

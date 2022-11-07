@@ -2,23 +2,26 @@ import classNames from 'classnames';
 import S from './Part.module.scss';
 
 interface IProps {
-  children?: JSX.Element | string;
-  text?: string;
-  type?: 'treasures' | 'ministry' | 'cristian';
+  path?: 'treasures' | 'ministry' | 'cristianLife' | 'songs' | 'week' | 'weekExcerpt' | 'comments';
+  index?: number;
+  data: any;
   doNotPray?: boolean;
+  doNotEditLabel?: boolean;
+  section?: 'treasures' | 'ministry' | 'cristianLife';
+  onWriteData: any; 
 }
 
 function Part(props: IProps) {
   const search = (string: string) => {
-    return props.text?.toLowerCase().includes(string);
+    return props.data.title?.toLowerCase().includes(string);
   };
 
   let color;
   let label;
 
-  const isTreasures = (props.type === 'treasures') || props.type === undefined;
-  const isMinistry = props.type === 'ministry';
-  const isCristian = props.type === 'cristian';
+  const isTreasures = (props.section === 'treasures') || props.section === undefined;
+  const isMinistry = props.section === 'ministry';
+  const isCristian = props.section === 'cristianLife';
 
   if (isTreasures) {
     color = '#626262';
@@ -30,7 +33,7 @@ function Part(props: IProps) {
     color = '#626262';
   };
 
-  const isPrayer = search('cântico') && (isTreasures || isCristian) && !props.doNotPray;
+  const isPrayer = search('cântico') && (isTreasures || isCristian);
   const isStudent = search('leitura da bíblia') || isMinistry && !search('vídeo');
   const isStudy = search('estudo bíblico de congregação');
   const isPresident = search(' | ');
@@ -45,22 +48,80 @@ function Part(props: IProps) {
     label = 'Presidente:'
   }
 
-  const onBlur = (e: any) => {
+  const onBlurParticipant = (e: any) => {
     const $target = e.currentTarget.closest('.'+S.participant);
     const hasSomethingInIt = e.currentTarget.innerHTML.length;
     const classListMethod = hasSomethingInIt ? "add" : "remove";
+    e.currentTarget.classList[classListMethod](S.isFilled);
     $target.classList[classListMethod](S.isFilled);
   };
 
+  const onFocusParticipant = (e: any) => {
+    const $target = e.currentTarget.closest('.'+S.participant);
+    e.currentTarget.classList.remove(S.isFilled);
+    $target.classList.remove(S.isFilled);
+  }
+
+  const onBlurLabel = (e: any) => {
+    const $target = e.currentTarget;
+    const hasSomethingInIt = e.currentTarget.innerHTML.length;
+    const classListMethod = !hasSomethingInIt ? "add" : "remove";
+    $target.closest('.'+S.label).classList[classListMethod](S.isEmpty);
+  };
+
+  const onFocusLabel = (e: any) => {
+    const $target = e.currentTarget;
+    $target.closest('.'+S.label).classList.add(S.isEmpty);
+  };
+
+  const onBlurParticipantType = (e: any) => {
+    const $target = e.currentTarget;
+    const hasSomethingInIt = e.currentTarget.innerHTML.length;
+    const classListMethod = !hasSomethingInIt ? "add" : "remove";
+    $target.classList[classListMethod](S.isEmpty);
+  };
+
+  const onFocusParticipantType = (e: any) => {
+    const $target = e.currentTarget;
+    $target.classList.add(S.isEmpty);
+  };
+
+  const onBlurTime = (e: any) => {
+    const $target = e.currentTarget;
+    const hasSomethingInIt = e.currentTarget.innerHTML.length;
+    const classListMethod = !hasSomethingInIt ? "add" : "remove";
+    $target.parentElement.classList[classListMethod](S.mb);
+    $target.classList[classListMethod](S.isEmpty);
+  };
+
+  const onFocusTime = (e: any) => {
+    const $target = e.currentTarget;
+    $target.parentElement.classList.add(S.mb);
+    $target.classList.add(S.isEmpty);
+  };
+
+  const onWriteData = (e: any, type: string) => {
+    props.onWriteData(props.path, props.index || 0,  type, e.currentTarget.innerText);
+  };
+
+  const participantType = isPresident
+    ? <strong className={classNames(S.participantType, S.black)} contentEditable onBlur={onBlurParticipantType} onFocus={onFocusParticipantType} onKeyDown={(e) => onWriteData(e, 'participantType')}>{props.data.participantType || label}</strong>
+    : <span className={S.participantType} contentEditable onBlur={onBlurParticipantType} onFocus={onFocusParticipantType} onKeyDown={(e) => onWriteData(e, 'participantType')}>{props.data.participantType || label}</span>;
+
   const participant = (
   <div className={S.participant}>
-    <span className={S.participantType}>
-      {isPresident
-        ? <strong>{label}</strong>
-        : label
-      }
-    </span> 
-    <div contentEditable spellCheck="false" className={S.input} onBlur={onBlur}></div>
+    {label && participantType}
+    
+    <div
+      contentEditable
+      spellCheck="false"
+      className={S.input}
+      onBlur={onBlurParticipant}
+      onFocus={onFocusParticipant}
+      onKeyDown={(e) => onWriteData(e, 'participant')}
+    >
+      { props.data.participant || ''}
+    </div>
   </div>
   );
 
@@ -69,10 +130,36 @@ function Part(props: IProps) {
   return (
     <div className={S.part}>
       <div className={classNames(S.label, {[S.isPresident]: isPresident})}>
-         {!isPresident && ball} { props.children || props.text}
+         {!isPresident && ball}
+         <div
+            className={S.inputLabel}
+            contentEditable={!props.doNotEditLabel}
+            onBlur={onBlurLabel}
+            onFocus={onFocusLabel}
+            onKeyDown={(e) => onWriteData(e, 'title')}
+          >
+          { props.data.title }
+        </div>
+
+        {
+          Boolean(props.data.time) && 
+          (
+            <small
+              className={S.inputTime}
+              contentEditable={!props.doNotEditLabel}
+              onBlur={onBlurTime}
+              onFocus={onFocusTime}
+              onKeyDown={(e) => onWriteData(e, 'time')}
+            >
+              { props.data.time }
+            </small>
+          )
+        }
       </div>
 
-      {!search("cântico") && participant}
+        
+
+      {!props.doNotPray && participant}
       
     </div>
   );

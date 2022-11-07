@@ -20,3 +20,49 @@
     min-width: 1000px;
   }
 }
+
+.saveAs {
+  padding: 8px 16px;
+  font-size: 18px;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #ededed;
+  border: 0;
+  cursor: pointer;
+  margin-bottom: 12px;
+  min-width: 180px;
+
+  transition: 200ms ease;
+
+  &:hover {
+    filter: brightness(0.97);
+    transform: scale(0.95);
+  }
+
+  &.pdf {
+    background-color: #a43365;
+  }
+
+  &.text {
+    background: #7298a0;
+  }
+}
+
+.backup {
+  min-width: 180px;
+  padding: 8px 16px;
+  font-size: 18px;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #ededed;
+  border: 0;
+  cursor: pointer;
+  margin-bottom: 12px;
+  background: grey;
+  transition: 200ms ease;
+
+  &:hover {
+    filter: brightness(0.97);
+    transform: scale(0.95);
+  }
+}

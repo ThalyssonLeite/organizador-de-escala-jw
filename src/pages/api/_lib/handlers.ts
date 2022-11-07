@@ -30,17 +30,25 @@ function getProgramationFromBrowser () {
 
   const programationTree = {
     songs: [
-      getTextFrom('#section1 #p3 a'),
-      Array.from($4sectionNodes.shift()?.querySelectorAll('strong') || [])
+      { title: getTextFrom('#section1 #p3 a') },
+      { title: Array.from($4sectionNodes.shift()?.querySelectorAll('strong') || [])
         .map(node => removeDirt(node.textContent))
-        .filter(text => text)[0],
-      Array.from($4sectionNodes.pop()?.querySelectorAll('strong') || [])
+        .filter(text => text)[0] },
+      { title: Array.from($4sectionNodes.pop()?.querySelectorAll('strong') || [])
         .map(node => removeDirt(node.textContent))
-        .filter(text => text)[0],
+        .filter(text => text)[0] },
     ],
-    week: getTextFrom('header #p1 strong'),
-    weekExcerpt: getTextFrom('header #p2 strong'),
-    treasures: removeDirt(getTextFrom('#section2 #p6 a strong')),
+    comments: [
+      { title: 'Comentários iniciais', time: '(1 min)'},
+      { title: 'Comentários finais', time: '(3 min)'},
+    ],
+    week: [{ title: getTextFrom('header #p1 strong') }],
+    weekExcerpt: [{ title: getTextFrom('header #p2 strong') }],
+    treasures: [
+      { title: removeDirt(getTextFrom('#section2 #p6 a strong')), time: '(10 min)' },
+      { title: 'Joias espirituais', time: '(10 min)' },
+      { title: "Leitura da Bíblia", time: '(4 min)' }
+    ],
     ministry: getChildrenFrom('#section3 ul').map(({children}) => {
       const [ title ] = Array.from(children[0].children);
 

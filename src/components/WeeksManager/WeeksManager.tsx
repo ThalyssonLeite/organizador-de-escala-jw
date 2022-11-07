@@ -27,18 +27,19 @@ function WeeksManager(props: IProps) {
 
   return (
     <div className={S.weeksManager}>
+      <h2 className='sr-only'>Gerenciador de Semanas</h2>
+
       {props.loading
         ? <i className='loading-gear-icon'></i>
         : <>
             {props.weeks.map((data, i) => {
               return (
-              <div key={data.date} className={S.week}>
-                {data.programation.week}
+                <div tabIndex={0} key={data.weekExcerpt[0].title} className={S.week}>
+                  {data.week[0].title}
 
-                <div className={S.closeWrapper}>
-                  <i className="close-icon" onClick={props.removeWeek(i)}/>
+                  <button tabIndex={0} className="close-icon" onClick={props.removeWeek(i)}><span className='sr-only'>Excluir Semana {data.week[0].title}</span></button>
                 </div>
-              </div>)
+                  )
             })}
             <div className={S.datePicker}>
               { addWeekState &&

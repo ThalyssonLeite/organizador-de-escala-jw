@@ -15,8 +15,6 @@ async function crawlDataFromJW(date: Date) {
   const resData = await fetch(`api/programation-data?date=${date}`);
   const dataProgamation: IDataProgramationLink = await resData.json();
 
-  console.log(dataProgamation);
-
   return dataProgamation;
 };
 
@@ -24,20 +22,38 @@ async function getMaxDateForWorkBooks(callback: (date: Date) => void) {
   const res = await fetch('api/find-final-date');
   const maxWorkbookDate = await res.text();
 
-  console.log(maxWorkbookDate)
+  const data = {
+    lastUpdate: new Date().toISOString(),
+    maxWorkbookDate: new Date(maxWorkbookDate)
+  };
 
-  return callback(new Date(maxWorkbookDate));
+  localStorage.setItem('maxDateLastUpdate', JSON.stringify(data));
+
+  callback(data.maxWorkbookDate);
 };
 
+function downloadText(filename: string, text: string, formart: string = 'plain') {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/'+formart+';charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
 const Home: NextPage = (props: any) => {
-  const localStorageKey = 'weeks';
+  const localStorageWeeksKey = 'weeks';
 
   const [weeks, setWeeks] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [maxDate, setMaxDate] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
-    const weeksStored = JSON.parse(localStorage.getItem(localStorageKey) || '[]');
+    const weeksStored = JSON.parse(localStorage.getItem(localStorageWeeksKey) || '[]');
 
     if (!weeksStored.length) return;
 
@@ -45,6 +61,17 @@ const Home: NextPage = (props: any) => {
   }, []);
 
   useEffect(() => {
+    const maxDateLastUpdateFromLS = JSON.parse(localStorage.getItem('maxDateLastUpdate') || '{}');
+    const lastMaxDateUpdate = new Date(maxDateLastUpdateFromLS.lastUpdate || new Date);
+    const differenceInDays = (+new Date() - +lastMaxDateUpdate) / (1000 * 60 * 60 * 24);
+  
+    if (differenceInDays && differenceInDays < 1) {
+      setMaxDate(new Date(maxDateLastUpdateFromLS.maxWorkbookDate));
+      
+      return;
+    };
+    //What the above does: Do not do that expensive task if you already did it today;
+
     getMaxDateForWorkBooks(setMaxDate);
   }, []);
 
@@ -56,17 +83,18 @@ const Home: NextPage = (props: any) => {
 
     const newWeeks = [
       ...weeks,
-      {programation: data, date}
+      data
     ];
 
-
-    localStorage.setItem(localStorageKey, JSON.stringify(newWeeks));
+    localStorage.setItem(localStorageWeeksKey, JSON.stringify(newWeeks));
     setWeeks(newWeeks);
   };
 
   const onDeleteWeek = (i: number) => () => {
     const _weeks = [...weeks];
     _weeks.splice(i, 1);
+
+    localStorage.setItem(localStorageWeeksKey, JSON.stringify(_weeks));
     setWeeks(_weeks);
   };
 
@@ -78,11 +106,8 @@ const Home: NextPage = (props: any) => {
     const height = 841.89;
     const $node = $wrapper.current;
     const options = {
-      style: {
-        minWidth: width,
-        maxWidth: 'unset'
-      },
-      overrideWidth: 1000
+      overrideWidth: 1000,
+      filename: 'Escala de Meio de Semana PDF'
     };
 
     $node.classList.add(S.toPrint);
@@ -90,7 +115,58 @@ const Home: NextPage = (props: any) => {
     domToPdf($node, options, (pdf: any) => {
       $node.classList.remove(S.toPrint);
     })
-  }
+  };
+
+  const downloadAsTXT = () => {
+    const $endNode = document.createElement('div');
+    $endNode.innerHTML = '$end';
+
+    const programationWrappers = Array.from($wrapper.current.childNodes);
+    const allMainElements = programationWrappers.
+      map((node: any) => [...Array.from(node.childNodes), $endNode])
+      .flat(2);
+    const arrayOfTexts = allMainElements
+      .map((node: any) => node.innerText)
+      .map(text => text.split('\n'))
+      .map(([label, ...rest]) => {
+        const thereIsRest = rest[0];
+        const restOfTheText = thereIsRest
+          ? ` | ${rest.join(' ')}`
+          : '';
+        const endNodeLineSpecialBreak = label === '$end'
+          ? '\n'
+          : '';
+
+        return `${endNodeLineSpecialBreak || label}${restOfTheText}`
+      })
+    
+    const finalFormatedText = arrayOfTexts.join('\n');
+    const filename = 'Escala de Meio de Semana TXT';
+
+    downloadText(filename, finalFormatedText);
+  };
+
+  const onWriteData = (i: number) => (changedWeekData: any) => {
+    const _weeks = [...weeks];
+    _weeks.splice(i, 1, changedWeekData);
+
+    localStorage.setItem(localStorageWeeksKey, JSON.stringify(_weeks));
+  };
+
+  const importBackup = async (e: any) => {
+    const file = await e.currentTarget.files[0].text();
+    const backup = JSON.parse(file);
+    console.log(backup)
+
+    if (Array.isArray(backup)) {
+      const fromLS = JSON.parse(localStorage.getItem(localStorageWeeksKey) || '[]');
+      const weeks = [...fromLS, ...backup];
+      localStorage.setItem(localStorageWeeksKey, JSON.stringify(weeks));
+
+      console.log(weeks)
+      setWeeks(weeks);
+    }
+  };
 
   return (
     <div className={S.appWrapper}>
@@ -108,20 +184,51 @@ const Home: NextPage = (props: any) => {
         maxDate={maxDate}
       />
 
+        <h2 className='sr-only'>Programação das reuniões</h2>
+
         <div className={S.programationWrapper} ref={$wrapper}>
           {weeks.map((data: any, i: number) => {
             return (
               <Programation
                 key={data.date}
                 index={i}
-                data={data.programation}
+                data={data}
                 className={classNames({bordered: i % 2 !== 0})}
+                onWriteData={onWriteData(i)}
               />
             )
           })}
         </div>
 
-      <button onClick={downloadAsPDF}>Salvar</button>
+      {
+        Boolean(weeks.length) && (
+          <>
+            <button
+              className={classNames(S.saveAs, S.pdf)}
+              onClick={downloadAsPDF}
+            >
+              Salvar como PDF
+            </button>
+
+            <button
+              className={classNames(S.saveAs, S.text)}
+              onClick={downloadAsTXT}
+            >
+              Salvar como TXT
+            </button>
+
+           
+            <button
+              className={classNames(S.backup)}
+              onClick={() => downloadText('Backup Reunião de Meio de Semana.backup', localStorage.getItem(localStorageWeeksKey) || '[]')}
+            >
+              Baixar Backup
+            </button>
+          </>
+        )
+      }
+      <label htmlFor="import-backup" className={S.backup}>Importar Backup</label>
+      <input type="file"accept='.backup' name="photo" id="import-backup" onChange={importBackup}/>
     </div>
   )
 }

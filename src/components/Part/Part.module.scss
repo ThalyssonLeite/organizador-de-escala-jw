@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 30px;
+  gap: 5px;
 
   width: 100%;
   padding-left: 16px;
@@ -19,6 +19,59 @@
   &.isPresident {
     max-width: unset;
   }
+
+  &.isEmpty {
+    .ball {
+      margin-top: 10px;
+    }
+
+    .inputLabel {
+      border: 1px solid grey;
+      padding: 4px 8px;
+      min-width: 170px;
+    }
+
+    .inputTime:not(.isEmpty) {
+      margin-top: 5px;
+    }
+  }
+
+  &.mb {
+    .inputLabel {
+      margin-top: 5px;
+    }
+
+    .ball {
+      margin-top: 10px;
+    }
+  }
+}
+
+.inputLabel {
+  font-size: 16px;
+  border: none;
+  padding: 0px;
+  outline: none;
+  transition: 300ms ease;
+  border-radius: 4px;
+  max-width: 560px;
+}
+
+.inputTime {
+  border: none;
+  padding: 0px;
+  outline: none;
+  transition: 300ms ease;
+  border-radius: 4px;
+  font-size: 14px;
+  transform: translateX(-1px);
+
+  &.isEmpty {
+    border: 1px solid grey;
+    padding: 4px 8px;
+    min-width: 60px;
+    min-height: 28px;
+  }
 }
 
 .ball {
@@ -27,7 +80,7 @@
   height: 8px;
   border-radius: 8px;
 
-  margin-top: 6px;
+  margin-top: 5px;
 }
 
 .participant {
@@ -53,9 +106,24 @@
 .participantType {
   color: #605f63;
   margin-top: 5px;
+  outline: 0;
+  transition: 300ms ease;
+  min-width: 100px;
+  border-radius: 4px;
+  text-align: right;
 
-  & strong {
+  &.black {
     color: black;
+  }
+
+  &.isEmpty {
+    padding: 4px 8px;
+    border: 1px solid grey;
+    margin-top: 0;
+  }
+
+  &.isEmpty + .input.isFilled {
+    margin-top: 5px;
   }
 }
 
@@ -66,7 +134,8 @@
   border: 1px solid grey;
   box-sizing: border-box;
   padding: 4px 8px;
-  min-width: 170px;
+  min-width: 90px;
   max-width: 170px;
   font-size: 16px;
+  transition: 300ms ease;
 }

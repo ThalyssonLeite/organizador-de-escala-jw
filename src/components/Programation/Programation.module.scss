@@ -1,12 +1,10 @@
-.wrapper {
-  width: 100%;
-  padding: 12.5px 20px;
-} 
-
 .programation {
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  width: 100%;
+  padding: 20px;
 }
 
 .title {
@@ -33,6 +31,7 @@
 
   &::before {
     content: "\e65c";
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,6 +52,7 @@
 
   &::before {
     content: "\e6bb";
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -73,6 +73,7 @@
 
   &::before {
     content: "\e6ec";
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;

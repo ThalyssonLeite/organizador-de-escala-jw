@@ -21,7 +21,7 @@ export default async function getOptions(isDev: boolean): Promise<IOptions> {
     options = {
       args: [],
       executablePath: exePath,
-      headless: false,
+      headless: true,
     };
   } else {
     options = {
