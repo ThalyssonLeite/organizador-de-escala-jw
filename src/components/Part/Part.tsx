@@ -109,7 +109,7 @@ function Part(props: IProps) {
     : <span className={S.participantType} contentEditable onBlur={onBlurParticipantType} onFocus={onFocusParticipantType} onKeyDown={(e) => onWriteData(e, 'participantType')}>{props.data.participantType || label}</span>;
 
   const participant = (
-  <div className={S.participant}>
+  <div className={classNames(S.participant, {[S.isFilled]: props.data.participant})}>
     {label && participantType}
     
     <div
