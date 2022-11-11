@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useEffect } from 'react';
 import S from './Part.module.scss';
 
 interface IProps {
@@ -17,7 +18,7 @@ function Part(props: IProps) {
   };
 
   let color;
-  let label;
+  let label: any;
 
   const isTreasures = (props.section === 'treasures') || props.section === undefined;
   const isMinistry = props.section === 'ministry';
@@ -101,7 +102,8 @@ function Part(props: IProps) {
   };
 
   const onWriteData = (e: any, type: string) => {
-    props.onWriteData(props.path, props.index || 0,  type, e.currentTarget.innerText);
+    console.log(typeof e, typeof e === 'string')
+    props.onWriteData(props.path, props.index,  type, typeof e === 'string' ? e : e.currentTarget.innerText);
   };
 
   const participantType = isPresident
@@ -109,23 +111,27 @@ function Part(props: IProps) {
     : <span className={S.participantType} contentEditable onBlur={onBlurParticipantType} onFocus={onFocusParticipantType} onKeyDown={(e) => onWriteData(e, 'participantType')}>{props.data.participantType || label}</span>;
 
   const participant = (
-  <div className={classNames(S.participant, {[S.isFilled]: props.data.participant})}>
-    {label && participantType}
-    
-    <div
-      contentEditable
-      spellCheck="false"
-      className={S.input}
-      onBlur={onBlurParticipant}
-      onFocus={onFocusParticipant}
-      onKeyDown={(e) => onWriteData(e, 'participant')}
-    >
-      { props.data.participant || ''}
+      <div className={classNames(S.participant, {[S.isFilled]: props.data.participant})}>
+        {label && participantType}
+      
+        <div
+          contentEditable
+          spellCheck="false"
+          className={S.input}
+          onBlur={onBlurParticipant}
+          onFocus={onFocusParticipant}
+          onKeyDown={(e) => onWriteData(e, 'participant')}
+        >
+          { props.data.participant || ''}
+        </div>
     </div>
-  </div>
   );
 
   const ball = (<div className={S.ball} style={{ background: color }}/>);
+
+  useEffect(() => {
+    if (label) onWriteData(label, 'participantType');
+  }, []);
 
   return (
     <div className={S.part}>

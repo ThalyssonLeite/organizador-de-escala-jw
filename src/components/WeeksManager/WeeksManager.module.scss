@@ -14,8 +14,11 @@
 .week {
   position: relative;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
+
+  width: 100%;
 
   background: #7298a0;
   color: white;
@@ -33,7 +36,7 @@
     transition: 300ms ease;
 
     &:is(:hover, :focus) {
-      transform: scale(1.1);
+      transform: scale(1.1) rotate(180deg);
     }
   }
 }

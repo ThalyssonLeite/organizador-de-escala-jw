@@ -45,7 +45,7 @@ function getProgramationFromBrowser () {
     week: [{ title: getTextFrom('header #p1 strong') }],
     weekExcerpt: [{ title: getTextFrom('header #p2 strong') }],
     treasures: [
-      { title: removeDirt(getTextFrom('#section2 #p6 a strong')), time: '(10 min)' },
+      { title: getManyTexstFrom('#section2 #p6 strong').join(''), time: '(10 min)' },
       { title: 'Joias espirituais', time: '(10 min)' },
       { title: "Leitura da Bíblia", time: '(4 min)' }
     ],

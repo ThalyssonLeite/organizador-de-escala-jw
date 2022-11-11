@@ -20,7 +20,7 @@ function Programation(props: IProps) {
 
   return (
     <div className={classNames(S.programation, props.className)}>
-        <Part data={{ title: `${props.data.week[0].title} | ${props.data.weekExcerpt[0].title}`}} doNotEditLabel={true} onWriteData={onWriteData}/>
+        <Part path="weekExcerpt" data={{ title: `${props.data.week[0].title} | ${props.data.weekExcerpt[0].title}`}} doNotEditLabel={true} onWriteData={onWriteData}/>
 
         <Part path="songs" data={props.data.songs[0]} onWriteData={onWriteData}/>
         <Part path="comments" data={props.data.comments[0]} onWriteData={onWriteData}/>

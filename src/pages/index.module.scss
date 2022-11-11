@@ -21,6 +21,20 @@
   }
 }
 
+.area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+
+  padding: 12px 16px 18px;
+  border-radius: 4px;
+  background: #ededed;
+  box-shadow: inset 0px 0px 7px 0px #0000001a;
+  margin-bottom: 12px;
+}
+
 .saveAs {
   padding: 8px 16px;
   font-size: 18px;
@@ -29,22 +43,34 @@
   color: #ededed;
   border: 0;
   cursor: pointer;
-  margin-bottom: 12px;
   min-width: 180px;
-
-  transition: 200ms ease;
+  background: var(--bg);
+  box-shadow: 0 6px 0 0 var(--bs);
+  transition: 150ms ease;
 
   &:hover {
-    filter: brightness(0.97);
-    transform: scale(0.95);
+    filter: brightness(0.9);
+    box-shadow: 0 0px 0 0 var(--bs);
+    transform: translateY(6px);
   }
 
   &.pdf {
-    background-color: #a43365;
+    --bg: #a43365;
+    --bs: #43011f;
   }
 
   &.text {
-    background: #7298a0;
+    --bg: #7298a0;
+    --bs: #006073;
+  }
+
+  &.designation {
+    --bg: #c38439;
+    --bs: #8b4d00;
+  }
+
+  &.backup {
+    --bg: grey;
   }
 }
 
@@ -57,12 +83,16 @@
   color: #ededed;
   border: 0;
   cursor: pointer;
-  margin-bottom: 12px;
   background: grey;
   transition: 200ms ease;
+  text-align: center;
+
+  box-shadow: 0 6px 0 0 rgb(71, 71, 71);
+  transition: 150ms ease;
 
   &:hover {
-    filter: brightness(0.97);
-    transform: scale(0.95);
+    filter: brightness(0.9);
+    box-shadow: 0 0px 0 0 rgb(71, 71, 71);
+    transform: translateY(6px);
   }
 }

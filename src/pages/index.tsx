@@ -10,6 +10,7 @@ import WeeksManager from '../components/WeeksManager/WeeksManager';
 import axios from 'axios';
 import domToPdf from 'dom-to-pdf';
 import classNames from 'classnames';
+import Desgination from '../components/Designations/Designation';
 
 async function crawlDataFromJW(date: Date) {
   const resData = await fetch(`api/programation-data?date=${date}`);
@@ -184,51 +185,71 @@ const Home: NextPage = (props: any) => {
         maxDate={maxDate}
       />
 
-        <h2 className='sr-only'>Programação das reuniões</h2>
+      <h2 className='sr-only'>Programação das reuniões</h2>
 
-        <div className={S.programationWrapper} ref={$wrapper}>
-          {weeks.map((data: any, i: number) => {
-            return (
-              <Programation
-                key={data.date}
-                index={i}
-                data={data}
-                className={classNames({bordered: i % 2 !== 0})}
-                onWriteData={onWriteData(i)}
-              />
-            )
-          })}
-        </div>
+      <div className={S.programationWrapper} ref={$wrapper}>
+        {weeks.map((data: any, i: number) => {
+          return (
+            <Programation
+              key={data.date}
+              index={i}
+              data={data}
+              className={classNames({bordered: i % 2 !== 0})}
+              onWriteData={onWriteData(i)}
+            />
+          )
+        })}
+      </div>
 
       {
         Boolean(weeks.length) && (
           <>
-            <button
-              className={classNames(S.saveAs, S.pdf)}
-              onClick={downloadAsPDF}
-            >
-              Salvar como PDF
-            </button>
+            <div className={S.area}>
+              <h4>Área de Download</h4>
+              <button className={classNames(S.saveAs, S.pdf)} onClick={downloadAsPDF}>
+                Salvar como PDF
+              </button>
+              
+              <button className={classNames(S.saveAs, S.text)} onClick={downloadAsTXT}>
+                Salvar como TXT
+              </button>
+            </div>
 
-            <button
-              className={classNames(S.saveAs, S.text)}
-              onClick={downloadAsTXT}
-            >
-              Salvar como TXT
-            </button>
+            <div className={S.area}>
+              <h4>Área de Designações</h4>
 
+              <button className={classNames(S.saveAs, S.designation)} onClick={downloadAsTXT}>
+                Ver Designações
+              </button>
+            </div>
            
-            <button
-              className={classNames(S.backup)}
-              onClick={() => downloadText('Backup Reunião de Meio de Semana.backup', localStorage.getItem(localStorageWeeksKey) || '[]')}
-            >
-              Baixar Backup
-            </button>
+            <div className={S.area}>
+              <h4>Área de Backup</h4>
+              <button
+                className={classNames(S.saveAs, S.backup)}
+                onClick={() => downloadText('Backup Reunião de Meio de Semana.backup', localStorage.getItem(localStorageWeeksKey) || '[]')}
+              >
+                Baixar Backup
+              </button>
+
+              <label htmlFor="import-backup" className={S.backup}>Importar Backup</label>
+              <input type="file" accept='.backup' name="photo" id="import-backup" onChange={importBackup}/>
+            </div>
           </>
         )
       }
-      <label htmlFor="import-backup" className={S.backup}>Importar Backup</label>
-      <input type="file"accept='.backup' name="photo" id="import-backup" onChange={importBackup}/>
+
+      {
+        !Boolean(weeks.length) && (
+          <div className={S.area}>
+            <h4>Área de Backup</h4>
+
+            <label htmlFor="import-backup" className={S.backup}>Importar Backup</label>
+            <input type="file"accept='.backup' name="photo" id="import-backup" onChange={importBackup}/>
+          </div>
+      )}
+      
+      <Desgination/>
     </div>
   )
 }
