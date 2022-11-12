@@ -5,16 +5,15 @@ import { useEffect, useRef, useState } from 'react';
 import Programation from '../components/Programation/Programation';
 import S from './index.module.scss';
 
-import { IDataProgramationLink } from './api/programation-data';
 import WeeksManager from '../components/WeeksManager/WeeksManager';
 import axios from 'axios';
-import domToPdf from 'dom-to-pdf';
+const domToPdf = require('dom-to-pdf');
 import classNames from 'classnames';
 import Desgination from '../components/Designations/Designation';
 
 async function crawlDataFromJW(date: Date) {
   const resData = await fetch(`api/programation-data?date=${date}`);
-  const dataProgamation: IDataProgramationLink = await resData.json();
+  const dataProgamation: any = await resData.json();
 
   return dataProgamation;
 };

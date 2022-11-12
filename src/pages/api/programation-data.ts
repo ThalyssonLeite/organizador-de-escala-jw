@@ -5,22 +5,7 @@ import { disconectBrowser } from './_lib/chrome';
 import { getLinkFromBrowser, getProgramationFromBrowser } from './_lib/handlers';
 import initializeBrowser from './_lib/initializeBrowser';
 
-export type IDataProgramationLink = {
-  songs: (string | undefined)[];
-  week: string;
-  weekExcerpt: string;
-  treasures: string;
-  ministry: {
-      title: string | null;
-      time: string;
-  }[];
-  cristianLife: {
-    title: string,
-    time: string
-  }[];
-};
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse<IDataProgramationLink>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const url = 'https://wol.jw.org/pt';
   let browser;
   let page: Page;
