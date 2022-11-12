@@ -33,7 +33,7 @@ async function getMaxDateForWorkBooks(callback: (date: Date) => void) {
   callback(data.maxWorkbookDate);
 };
 
-function downloadText(filename: string, text: string, formart: string = 'plain') {
+export function downloadText(filename: string, text: string, formart: string = 'plain') {
   var element = document.createElement('a');
   element.setAttribute('href', 'data:text/'+formart+';charset=utf-8,' + encodeURIComponent(text));
   element.setAttribute('download', filename);
@@ -52,6 +52,7 @@ const Home: NextPage = (props: any) => {
   const [weeks, setWeeks] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [maxDate, setMaxDate] = useState<Date | undefined>(undefined);
+  const [designationsState, setDesignationsState] = useState<boolean>(false);
 
   useEffect(() => {
     const weeksStored = JSON.parse(localStorage.getItem(localStorageWeeksKey) || '[]');
@@ -218,7 +219,7 @@ const Home: NextPage = (props: any) => {
             <div className={S.area}>
               <h4>Área de Designações</h4>
 
-              <button className={classNames(S.saveAs, S.designation)} onClick={downloadAsTXT}>
+              <button className={classNames(S.saveAs, S.designation)} onClick={() => setDesignationsState(!designationsState)}>
                 Ver Designações
               </button>
             </div>
@@ -249,7 +250,7 @@ const Home: NextPage = (props: any) => {
           </div>
       )}
       
-      <Desgination/>
+      <Desgination state={designationsState} toggleState={setDesignationsState}/>
     </div>
   )
 }

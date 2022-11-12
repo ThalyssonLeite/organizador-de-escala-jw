@@ -46,7 +46,7 @@
   min-width: 180px;
   background: var(--bg);
   box-shadow: 0 6px 0 0 var(--bs);
-  transition: 150ms ease;
+  transition: 250ms ease;
 
   &:hover {
     filter: brightness(0.9);
@@ -84,7 +84,7 @@
   border: 0;
   cursor: pointer;
   background: grey;
-  transition: 200ms ease;
+  transition: 250ms ease;
   text-align: center;
 
   box-shadow: 0 6px 0 0 rgb(71, 71, 71);

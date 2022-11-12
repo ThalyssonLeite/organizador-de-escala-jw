@@ -102,8 +102,11 @@ function Part(props: IProps) {
   };
 
   const onWriteData = (e: any, type: string) => {
-    console.log(typeof e, typeof e === 'string')
-    props.onWriteData(props.path, props.index,  type, typeof e === 'string' ? e : e.currentTarget.innerText);
+    const target = e.currentTarget;
+
+    setTimeout(() => {
+      props.onWriteData(props.path, props.index,  type, typeof e === 'string' ? e : target.innerText);
+    }, 300)
   };
 
   const participantType = isPresident
