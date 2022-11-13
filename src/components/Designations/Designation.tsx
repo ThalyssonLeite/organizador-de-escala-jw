@@ -79,7 +79,13 @@ Designados: ${designation?.participant}\n`
         <span className='sr-only'>Fechar Designações</span>
       </button>
 
-      <button className={S.saveAs} onClick={saveAsTXT}>Salvar como TXT</button>
+      {
+        designations.length
+          ? <button className={S.saveAs} onClick={saveAsTXT}>Salvar como TXT</button>
+          : <div className={S.card}>
+            Você ainda não designou nenhum estudante da Escola
+          </div>
+      }
 
       {
         designations.map((participant, i) => {

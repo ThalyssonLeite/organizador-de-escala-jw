@@ -1,5 +1,4 @@
-import puppeteer, { Browser } from 'puppeteer-core';
-import getOptions from './chromeOptions';
+import puppeteer, { Browser } from 'puppeteer';
 
 export const url = 'https://wol.jw.org/pt/wol/h/r5/lp-t';
 
@@ -10,23 +9,7 @@ export function disconectBrowser() {
 };
 
 export default async function newBrowser(): Promise<Browser> {
-  const isDev = !process.env.AWS_REGION;
-  const options = await getOptions(isDev);
-
-  try {
-    if (!browser || !browser.isConnected()) browser = await puppeteer.launch(options);
-  } catch (error) {
-    const isOnWindows = process.platform === 'win32';
-    const alternativePathForChrome = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe';
-
-    if (isOnWindows) {
-      options.executablePath = alternativePathForChrome;
-
-      if (!browser || !browser.isConnected()) browser = await puppeteer.launch(options);
-    }
-
-    else throw error;
-  }
+  if (!browser || !browser.isConnected()) browser = await puppeteer.launch();
 
   return browser;
 };

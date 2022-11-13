@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Browser, Page } from 'puppeteer-core';
+import { Browser, Page } from 'puppeteer';
 import { disconectBrowser } from './_lib/chrome';
 import { getLinkFromBrowser, getProgramationFromBrowser } from './_lib/handlers';
 import initializeBrowser from './_lib/initializeBrowser';
