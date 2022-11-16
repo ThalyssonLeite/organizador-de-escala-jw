@@ -46,7 +46,7 @@
 <b>Passo 4 - Tudo Pronto!</b>
   <ol>
     <li>Deu tudo certo! Para usar o programa basta clicar em <kbd>Iniciar Programa</kbd>dentro da pasta que voê extraiu no passo 2</li>
-    <li>Seu navegador padrão vai abrir, uma telinha preta vai aparecer por uns 5s e depois fechar (isso significa que o Organizador foi iniciado), daí basta aguardar ele iniciar, isso pode demorar 15s ou 1min.</li>
+    <li>Seu navegador padrão vai abrir (como o Goolgle Chrome ou Edge) <b>não feche ele</b>, uma telinha preta vai aparecer por uns 5s e depois fechar (isso significa que o Organizador foi iniciado), daí basta aguardar ele iniciar, isso pode demorar 15s ou 1min.</li>
   </ol>
 
 ---
