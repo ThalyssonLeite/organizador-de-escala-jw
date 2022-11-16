@@ -19,7 +19,7 @@
 ---
 ### <b>Instalação</b>
 
-<p>Infelizmente não é possível colocar esse programa e disponibilizá-lo na internet sem um custo mensal, se eu fizesse isso precisaria cobrar uma mensalidade ou assinatura para usar o programa. Por isso, aqui está o passo a passo necessário para instalar esse programa no seu computador (que precisa ser <b>Windows 8.1</b> para cima (ou seja, vai funcionar no <kbd>Windows 8.1, 10, 11</kbd>), Windows 8 ou 7 para baixo <b>não</b> vai funcionar), dito isso, todo o processo é bem simples, você não precisar digitar nenhum código.</p>
+<p>Infelizmente não é possível colocar esse programa e disponibilizá-lo na internet sem um custo mensal, se eu fizesse isso precisaria cobrar uma mensalidade ou assinatura para usar o programa. Por isso, aqui está o passo a passo necessário para instalar esse programa no seu computador (que precisa ser <b>Windows 8.1</b> para cima (ou seja, vai funcionar no <kbd>Windows 8.1, 10, 11</kbd>), Windows 8 ou 7 para baixo <b>não</b> vai funcionar), dito isso, todo o processo é bem simples, você não vai precisar digitar nenhum código.</p>
 
 <b>Passo 1 - Instalar Programa Necessário</b>
   <ol>
