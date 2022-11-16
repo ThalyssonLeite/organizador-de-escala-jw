@@ -23,14 +23,14 @@
 
 <b>Passo 1 - Instalar Programa Necessário</b>
   <ol>
-    <li>NodeJS - <a href="https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi">(Clique aqui para baixar)</a></li>
+    <li>Clique no link ao lado para baixar o NodeJS - <a href="https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi">(Clique aqui para baixar)</a></li>
     <li>Dê 2 cliques e marque a caixinha para Aceitar os Termos e aperte em <kbd>Next</kbd> (que significa <kbd>Próximo</kbd>) várias vezes, até que apareça o botão <kbd>Install</kbd> (que significa <kbd>Instalar</kbd>). Daí, vai aparecer um Pergunta na Tela, você precisa responder <kbd>Sim</kbd>, isso é muito importante, sim, o programa é seguro.</a></li>
     <li>Quando o programa terminar de instalar você pode fechar ele (e excluir o que você baixou neste passo se desejar).</a></li>
   </ol>
 
 <b>Passo 2 - Baixar o `Organizador de Escala JW`</b>
   <ol>
-    <li>Baixe o <kbd>Organizador de Escala JW</kbd> - <a href="https://github.com/ThalyssonLeite/organizador-de-escala-jw/archive/refs/heads/main.zip">(Clique aqui para baixar)</a></li>
+    <li>Clique no link ao lado para baixar o Organizador de Escala JW - <a href="https://github.com/ThalyssonLeite/organizador-de-escala-jw/archive/refs/heads/main.zip">(Clique aqui para baixar)</a></li>
     <li>Extraia o arquivo <kbd>organizador-de-escala-jw-main.zip</kbd>.</li>
     <li>Depois de extrair você pode renomear a pasta <kbd>organizador-de-escala-jw-main</kbd> para <kbd>Organizador de Escala JW</kbd>.</li>
     <li>Você pode renomear a pasta mas nunca o conteúdo dentro dela e NUNCA exclua essa pasta, caso contrário vai ter que fazer os passos 2 e 3 de novo.</li>
