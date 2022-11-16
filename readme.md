@@ -46,7 +46,7 @@
 <b>Passo 4 - Tudo Pronto!</b>
   <ol>
     <li>Deu tudo certo! Para usar o programa basta entrar na pasta que você extraiu (no passo 2) e clicar em <kbd>Iniciar Programa</kbd></li>
-    <li>Seu navegador padrão vai abrir (como o Goolgle Chrome ou Edge) <b>não feche ele</b>, uma telinha preta vai aparecer por uns 5s e depois fechar (isso significa que o Organizador foi iniciado), daí basta aguardar ele iniciar, isso pode demorar 15s ou 1min.</li>
+    <li>Uma telinha preta vai aparecer por uns 5s e depois se fechar sozinha (isso significa que o Organizador foi iniciado). Daí seu navegador de internet padrão vai abrir (como o Goolgle Chrome ou Edge) <b>não feche ele</b> basta aguardar o Organizador de Escala JW iniciar, isso pode demorar 5s ou 1min, mas não vai passar disso.</li>
   </ol>
 
 ---
