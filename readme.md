@@ -24,7 +24,7 @@
 <b>Passo 1 - Instalar Programa Necessário</b>
   <ol>
     <li>Clique no link ao lado para baixar o NodeJS - <a href="https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi">(Clique aqui para baixar)</a></li>
-    <li>Depois de abrir marque a caixinha para Aceitar os Termos e aperte em <kbd>Next</kbd> (que significa <kbd>Próximo</kbd>) várias vezes, até que apareça o botão <kbd>Install</kbd> (que significa <kbd>Instalar</kbd>). Daí, vai aparecer um Pergunta na Tela, você precisa responder <kbd>Sim</kbd>, isso é muito importante, sim, o programa é seguro.</a></li>
+    <li>Depois de abrir marque a caixinha para Aceitar os Termos e aperte em <kbd>Next</kbd> (que significa <kbd>Próximo</kbd>) várias vezes, até que apareça o botão <kbd>Install</kbd> (que significa <kbd>Instalar</kbd>). Daí, vai aparecer uma pergunta na Tela, é muito importante que você aperte em <kbd>Sim</kbd>.</a></li>
     <li>Quando o programa terminar de instalar você pode fechar ele (e excluir o que você baixou neste passo se desejar).</a></li>
   </ol>
 
