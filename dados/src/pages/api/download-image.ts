@@ -20,7 +20,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
       pngFile: true,
     };
 
-    const outputFile = `./temp/images/Escala.png`;
+    const outputFile = `./temp/images/Escala`;
 
     await poppler.pdfToCairo(file, outputFile, options);
 
