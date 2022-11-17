@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import fs from 'fs';
-import {pdfToPng} from 'pdf-to-png-converter';
+const { Poppler } = require("node-poppler");
 import admzip from 'adm-zip';
 
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
@@ -8,13 +8,21 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
   const tempExists = fs.existsSync(tempPath);
   if (tempExists) fs.rmSync(tempPath, { recursive: true, force: true });
   fs.mkdirSync('./temp');
+  fs.mkdirSync('./temp/images');
 
   const pdfPipe = req.pipe(fs.createWriteStream('./temp/Escala.pdf'));
 
   pdfPipe.on('finish', async () => {
-    await pdfToPng('./temp/Escala.pdf', {
-      outputFolder: './temp/images'
-    })
+    const file = './temp/Escala.pdf';
+
+    const poppler = new Poppler();
+    const options = {
+      pngFile: true,
+    };
+
+    const outputFile = `./temp/images/test_document.png`;
+
+    await poppler.pdfToCairo(file, outputFile, options);
 
     const images = fs.readdirSync('./temp/images');
     const zip = new admzip();
