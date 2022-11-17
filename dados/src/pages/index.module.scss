@@ -1,0 +1,108 @@
+.appWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.programationWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 80px;
+  width: 100%;
+  padding: 40px 20px;
+  max-width: 1000px;
+
+  &.toPrint {
+    min-width: 1000px;
+  }
+}
+
+.buttonsArea {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+
+  padding: 12px 16px 18px;
+  border-radius: 4px;
+  background: #ededed;
+  box-shadow: inset 0px 0px 7px 0px #0000001a;
+  margin-bottom: 12px;
+}
+
+.saveAs {
+  padding: 8px 16px;
+  font-size: 18px;
+  border-radius: 6px;
+  font-weight: 500;
+  color: white;
+  border: 0;
+  cursor: pointer;
+  min-width: 180px;
+  background: var(--bg);
+  box-shadow: 0 6px 0 0 var(--bs);
+  transition: 250ms ease;
+
+  &:hover {
+    filter: brightness(0.9);
+    box-shadow: 0 0px 0 0 var(--bs);
+    transform: translateY(6px);
+  }
+
+  &.pdf {
+    --bg: #a43365;
+    --bs: #43011f;
+  }
+
+  &.png {
+    --bg: #4b9a4d;
+    --bs: #0A570C;
+  }
+
+  &.text {
+    --bg: #7298a0;
+    --bs: #006073;
+  }
+
+  &.designation {
+    --bg: #c38439;
+    --bs: #8b4d00;
+  }
+
+  &.backup {
+    --bg: grey;
+  }
+}
+
+.backup {
+  min-width: 180px;
+  padding: 8px 16px;
+  font-size: 18px;
+  border-radius: 6px;
+  font-weight: 500;
+  color: white;
+  border: 0;
+  cursor: pointer;
+  background: grey;
+  transition: 250ms ease;
+  text-align: center;
+
+  box-shadow: 0 6px 0 0 rgb(71, 71, 71);
+  transition: 150ms ease;
+
+  &:hover {
+    filter: brightness(0.9);
+    box-shadow: 0 0px 0 0 rgb(71, 71, 71);
+    transform: translateY(6px);
+  }
+}
