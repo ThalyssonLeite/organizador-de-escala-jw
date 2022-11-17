@@ -38,9 +38,9 @@
 
 <b>Passo 3 - Instalar Pacotes</b>
   <ol>
-    <li>Abra a pasta que você baixou e extraiu (no passo 2) e clique duas vezes no arquivo <kbd>Instalar Pacotes</kbd></li>
+    <li>Abra a pasta que você baixou e extraiu (no passo 2) e clique duas vezes no arquivo <kbd>Instalar Pacotes [PENDENTE]</kbd></li>
     <li>Uma tela preta vai aparecer e ela vai começar a instalar os pacotes para você, aguarde que ela vai fechar sozinha, isso pode demorar alguns minutos.</li>
-    <li>Quando tiver terminado você deve perceber que <kbd>Instalar Pacotes</kbd> agora sumiu. Isso significa que deu tudo certo com os pacotes</li>
+    <li>Quando tiver terminado você deve perceber que <kbd>Instalar Pacotes [PENDENTE]</kbd> agora sumiu. Isso significa que deu tudo certo com os pacotes</li>
     <li>Mas se a pasta não sumiu e agora o nome do arquivo é <kbd>Instalar Pacotes [ERRO, CLIQUE DE NOVO]</kbd>, isso significa que você pode ter pulado o Passo 1 ou sua internet pode ter caído durante o processo ou que você está sem internet. Quando resolver esses problemas clique de novo em <kbd>Instalar Pacotes [ERRO, CLIQUE DE NOVO]</kbd> e deve dar tudo certo.</li>
   </ol>
 
