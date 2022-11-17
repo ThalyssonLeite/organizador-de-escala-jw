@@ -200,14 +200,6 @@ const Home: NextPage = (props: any) => {
     }
   };
 
-  useEffect(() => {
-    window.onbeforeunload = () => {
-      fetch('api/kill-node');
-      
-      return null;
-    }
-  }, [])
-
   return (
     <div className={S.appWrapper}>
       <Head>
