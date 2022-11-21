@@ -1,0 +1,13 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/api/_lib/chrome": "pages/api/_lib/chrome.js",
+  "/api/_lib/handlers": "pages/api/_lib/handlers.js",
+  "/api/download-image": "pages/api/download-image.js",
+  "/api/find-final-date": "pages/api/find-final-date.js",
+  "/api/programation-data": "pages/api/programation-data.js",
+  "/": "pages/index.html",
+  "/api/_lib/initializeBrowser": "pages/api/_lib/initializeBrowser.js",
+  "/404": "pages/404.html"
+}
