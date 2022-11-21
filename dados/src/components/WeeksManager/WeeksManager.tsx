@@ -22,6 +22,7 @@ function WeeksManager(props: IProps) {
 
   const onSelectDate = (date: Date): void => {
     props.setWeek(date);
+    localStorage.setItem('lastChosenDate', date.toISOString());
     setAddWeekState(false);
   };
 
@@ -47,6 +48,7 @@ function WeeksManager(props: IProps) {
                   onChange={onSelectDate}
                   minDate={new Date('01/01/2016')}
                   maxDate={props.maxDate}
+                  selected={localStorage.getItem('lastChosenDate') ? new Date(localStorage.getItem('lastChosenDate') || new Date) : new Date()}
                   inline
                 />}
             </div>
