@@ -69,7 +69,7 @@ Designados: ${designation?.participant}\n`
         }).join('')}`
     }).join('')}`
 
-    downloadText('Designações de Meio de Semana TEXT', text);
+    downloadText('Designações de Meio de Semana TXT', text);
   };
 
   return (

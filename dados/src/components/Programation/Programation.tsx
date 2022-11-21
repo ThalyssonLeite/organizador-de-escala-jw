@@ -19,7 +19,7 @@ function Programation(props: IProps) {
   };
 
   return (
-    <div className={classNames(S.programation, props.className)}>
+    <div className={classNames(S.programation, props.className, {[S.paddingTop]: props.index && props.index % 2 === 0})}>
         <Part path="weekExcerpt" data={{ ...props.data.weekExcerpt[0], title: `${props.data.week[0].title} | ${props.data.weekExcerpt[0].title}`}} doNotEditLabel={true} onWriteData={onWriteData}/>
 
         <Part path="songs" data={props.data.songs[0]} onWriteData={onWriteData}/>
