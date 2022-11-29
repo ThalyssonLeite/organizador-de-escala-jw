@@ -22,7 +22,7 @@
 
   &.isEmpty {
     .ball {
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     .inputLabel {
@@ -32,23 +32,23 @@
     }
 
     .inputTime:not(.isEmpty) {
-      margin-top: 5px;
+      margin-top: 6px;
     }
   }
 
   &.mb {
     .inputLabel {
-      margin-top: 5px;
+      margin-top: 6px;
     }
 
     .ball {
-      margin-top: 10px;
+      margin-top: 12px;
     }
   }
 }
 
 .inputLabel {
-  font-size: 16px;
+  font-size: 18px;
   border: none;
   padding: 0px;
   outline: none;
@@ -63,8 +63,9 @@
   outline: none;
   transition: 300ms ease;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 15px;
   transform: translateX(-1px);
+  margin-top: 1px;
 
   &.isEmpty {
     border: 1px solid grey;
@@ -80,7 +81,7 @@
   height: 8px;
   border-radius: 8px;
 
-  margin-top: 5px;
+  margin-top: 6px;
 }
 
 .participant {
@@ -105,10 +106,11 @@
 
 .participantType {
   color: #605f63;
-  margin-top: 5px;
+  margin-top: 6px;
   outline: 0;
   transition: 300ms ease;
   border-radius: 4px;
+  font-size: 18px;
 
   &.black {
     color: black;
@@ -122,19 +124,18 @@
   }
 
   &.isEmpty + .input.isFilled {
-    margin-top: 5px;
+    margin-top: 6px;
   }
 }
 
 .input {
-  font-size: 14px;
   border-radius: 4px;
   outline: none;
   border: 1px solid grey;
   box-sizing: border-box;
   padding: 4px 8px;
-  min-width: 158px;
-  max-width: 158px;
-  font-size: 16px;
+  min-width: 190px;
+  max-width: 190px;
+  font-size: 18px;
   transition: 300ms ease;
 }
