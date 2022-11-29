@@ -29,7 +29,7 @@
     <li>Clique no link ao lado para baixar o Node - <a href="https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi">(Clique aqui para baixar)</a></li>
     <li>Clique com o botão direito no arquivo e execute como Administrador</li>
     <li>Faça como mostrado no vídeo abaixo, depois vá para o passo 2</li>
-    <img src="./dados/node_instalation.gif" height="350" style="border-radius: 8px">
+    <img src="./dados/node_instalation.gif" style="border-radius: 8px">
   </ol>
 
 <b>Passo 2 - Baixar o `Organizador de Escala JW`</b>
