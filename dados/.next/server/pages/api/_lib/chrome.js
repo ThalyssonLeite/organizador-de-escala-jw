@@ -5,17 +5,10 @@ exports.id = 173;
 exports.ids = [173];
 exports.modules = {
 
-/***/ 462:
+/***/ 250:
 /***/ ((module) => {
 
-module.exports = import("puppeteer");;
-
-/***/ }),
-
-/***/ 17:
-/***/ ((module) => {
-
-module.exports = require("path");
+module.exports = import("puppeteer-core");;
 
 /***/ }),
 
@@ -30,12 +23,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "url": () => (/* binding */ url),
 /* harmony export */   "userAgent": () => (/* binding */ userAgent)
 /* harmony export */ });
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var puppeteer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(462);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([puppeteer__WEBPACK_IMPORTED_MODULE_1__]);
-puppeteer__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
-
+/* harmony import */ var puppeteer_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(250);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([puppeteer_core__WEBPACK_IMPORTED_MODULE_0__]);
+puppeteer_core__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 const url = "https://wol.jw.org/pt/wol/h/r5/lp-t";
 let browser;
@@ -43,8 +33,8 @@ function disconectBrowser() {
     if (browser && browser.isConnected()) browser.close();
 }
 async function newBrowser() {
-    if (!browser || !browser.isConnected()) browser = await puppeteer__WEBPACK_IMPORTED_MODULE_1__["default"].launch({
-        executablePath: path__WEBPACK_IMPORTED_MODULE_0___default().join(__dirname, "..", "..", "..", "..", "/chrome/chrome.exe")
+    if (!browser || !browser.isConnected()) browser = await puppeteer_core__WEBPACK_IMPORTED_MODULE_0__["default"].launch({
+        executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
     });
     return browser;
 }

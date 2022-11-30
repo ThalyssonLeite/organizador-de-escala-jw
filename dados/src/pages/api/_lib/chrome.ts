@@ -1,5 +1,5 @@
 import path from 'path';
-import puppeteer, { Browser } from 'puppeteer';
+import puppeteer, { Browser } from 'puppeteer-core';
 
 export const url = 'https://wol.jw.org/pt/wol/h/r5/lp-t';
 
@@ -10,9 +10,7 @@ export function disconectBrowser() {
 };
 
 export default async function newBrowser(): Promise<Browser> {
-  if (!browser || !browser.isConnected()) browser = await puppeteer.launch({
-    executablePath: path.join(__dirname, '..', '..', '..', '..', '/chrome/chrome.exe')
-  });
+  if (!browser || !browser.isConnected()) browser = await puppeteer.launch({executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'});
 
   return browser;
 };

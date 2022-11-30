@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Page } from 'puppeteer';
+import { Page } from 'puppeteer-core';
 import { disconectBrowser } from './_lib/chrome';
 import { getLinkFromBrowser, getProgramationFromBrowser } from './_lib/handlers';
 import initializeBrowser from './_lib/initializeBrowser';

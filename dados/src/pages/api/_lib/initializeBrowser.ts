@@ -1,5 +1,5 @@
-import { Page } from 'puppeteer';
-import { Browser } from 'puppeteer';
+import { Page } from 'puppeteer-core';
+import { Browser } from 'puppeteer-core';
 import newBrowser, { userAgent } from './chrome';
 
 export interface ILaunchedBrowser {
