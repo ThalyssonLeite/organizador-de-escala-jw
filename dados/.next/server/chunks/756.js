@@ -23,7 +23,7 @@ function getLinkFromBrowser(date) {
     const linkToScheduleFromJW = document.querySelector("#menuToday a")?.getAttribute("href");
     const linkToScheduleFromJWSplited = linkToScheduleFromJW?.split("/");
     linkToScheduleFromJWSplited?.splice(linkToScheduleFromJWSplited.length - 2, 2);
-    const currentYear = new Date().getFullYear();
+    const currentYear = new Date(date).getFullYear();
     const numberOfWeeks = getNumberOfWeeksTillThisDate(date);
     return `https://wol.jw.org${linkToScheduleFromJWSplited?.join("/")}/${currentYear}/${numberOfWeeks}`;
 }
