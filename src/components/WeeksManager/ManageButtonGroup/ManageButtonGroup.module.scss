@@ -1,0 +1,43 @@
+.manageButtonsGroup {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+
+.manageButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  background: #5b3c88;
+  color: white;
+  padding: 8px 8px;
+  border-radius: 4px;
+  font-weight: 400;
+
+  &.isDisabled {
+    pointer-events: none;
+    background: var(--color-grey);
+  }
+
+  &.deleteButton {
+    background: #AD2F2B;
+
+    &:hover {
+      background: #ca332e;
+    }
+  }
+
+  cursor: pointer;
+  transition: 200ms ease;
+
+  &:hover {
+    background: #6e45aa;
+  }
+}
+
+.manageButtonIcon {
+  height: 20px;
+  width: 20px;
+}

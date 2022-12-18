@@ -1,0 +1,44 @@
+.close-icon {
+  background: url('../../public/static/icons/close.svg') no-repeat center;
+  background-size: contain;
+  display: block;
+
+  width: 20px;
+  height: 20px;
+}
+
+.plus-icon {
+  background: url('../../public/static/icons/plus.svg') no-repeat center;
+  background-size: contain;
+  display: block;
+}
+
+.drag-icon {
+  background: url('../../public/static/icons/drag.svg') no-repeat center;
+  background-size: contain;
+  display: block;
+}
+
+.trash-icon {
+  background: url('../../public/static/icons/trash.svg') no-repeat center;
+  background-size: contain;
+  display: block;
+}
+
+.loading-icon {
+  background: url('../../public/static/icons/loading.svg') no-repeat center;
+  background-size: contain;
+  display: block;
+}
+
+.loading-fill-icon {
+  background: url('../../public/static/icons/loading-fill.svg') no-repeat center;
+  background-size: contain;
+  display: block;
+}
+
+.return-icon {
+  background: url('../../public/static/icons/return.svg') no-repeat center;
+  background-size: contain;
+  display: block;
+}

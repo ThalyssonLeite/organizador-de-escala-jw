@@ -1,0 +1,203 @@
+.weeksManager,
+.weeksGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  
+  width: 100%;
+}
+
+.week {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  width: 100%;
+
+  background: #5b3c88;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  font-weight: 400;
+  user-select: none;
+  overflow: hidden;
+
+  cursor: pointer;
+  transition: 200ms ease;
+
+  &.isNoMeeting {
+    background: #bd8646;
+
+    &:hover {
+      background: #cf9048;
+    } 
+  }
+
+  &.isMarkedToDelete {
+    background: #AD2F2B !important;
+
+    &:hover {
+      background: #ca332e !important;
+    }
+  }
+
+  &.isAddMode {
+    pointer-events: none;
+  }
+
+  .weekWarningMode {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    background: #AD2F2B;
+
+    i {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .loadingIcon {
+    width: 35px;
+    height: 35px;
+    filter: drop-shadow(0 0 4px var(--color-purple-dark));
+    margin: -4px auto;
+  }
+
+  button {
+    flex-shrink: 0;
+    border: 0;
+    cursor: pointer;
+    transition: all 300ms ease, border-radius 0ms;
+    width: 20px;
+    height: 20px;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &:hover {
+    background: #6e45aa;
+  }
+}
+
+.bigLoadingIcon {
+  width: 300px;
+  height: 300px;
+  filter: drop-shadow(0 0 2px var(--color-purple-dark));
+  margin: -10% auto;
+}
+
+.datePicker input {
+  margin-bottom: 8px;
+
+  font-size: 13px;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 2px #e9e9e9;
+  border: 1px solid #aeaeae;
+  line-height: 16px;
+  padding: 6px 10px 5px;
+
+  &:focus {
+    outline: none;
+    border-color: #aeaeae;
+    box-shadow: inset 0 2px 2px #e9e9e9, 0 0 10px 0 rgb(73 107 125 / 30%);
+  }
+}
+
+.switcher {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  align-items: center;
+  font-size: 16px;
+}
+
+.noMeetingWrapper {
+  width: 100%;
+  transition: 200ms ease;
+  opacity: 0;
+  pointer-events: none;
+  margin-top: -50px;
+
+  &.isVisible {
+    opacity: 1;
+    pointer-events: all;
+    margin-top: 0px;
+  }
+}
+
+.noMeeting {
+  background: white;
+  border: 2px solid var(--color-purple);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  width: 100%;
+  outline: none;
+  color: var(--color-purple);
+  font-weight: 600;
+
+  &::placeholder {
+    color: var(--color-purple-hover);
+    font-weight: 400;
+  }
+}
+
+.tutorialOverlay {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  top: 71px;
+  left: min(300px, 25%);
+  width: calc(100vw - min(300px, 25%));
+  height: calc(100vh - 71px);
+
+  backdrop-filter: blur(4px);
+  background: #9b9b9b9c;
+  transition: 200ms ease;
+  pointer-events: none;
+  color: var(--color-purple);
+  opacity: 0;
+
+  &.appear {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0};
+  100% {opacity: 1};
+}
+
+.tutorialOverlayContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  background: white;
+  border-radius: 8px;
+  padding: 20px 32px;
+  opacity: 0;
+
+  animation: fadeIn 200ms ease 200ms forwards;
+}
+

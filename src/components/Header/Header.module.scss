@@ -1,0 +1,62 @@
+.header {
+  grid-area: header;
+  position: fixed;
+  display: flex;
+  background: white;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 2px solid #d9d9d9;
+
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  font-family: Inter, sans-serif;
+  gap: 10px;
+}
+
+.logo {
+  width: 50px;
+  height: 44px;
+  align-self: center;
+}
+
+.headerWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 4px;
+}
+
+.title {
+  font-size: 16px;
+  margin-left: 6px;
+}
+
+.menu {
+  display: flex;
+  gap: 2px;
+  height: 100%;
+}
+
+.menuDivisor {
+  height: 16px;
+  min-width: 2px;
+  border-radius: 2px;
+  background: var(--color-grey);
+  margin: auto 4px;
+}
+
+.menuButton {
+  font-size: 14px;
+  padding: 4px 6px;
+  transition: 200ms ease;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #666;
+
+  &:hover {
+    background: #f0f0f0;
+    color: black;
+  }
+}

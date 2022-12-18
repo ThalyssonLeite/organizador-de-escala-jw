@@ -1,0 +1,140 @@
+.part {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+
+  width: 100%;
+  padding-left: 16px;
+}
+
+.label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 6px;
+
+  font-size: 16px;
+
+  &.isEmpty {
+    .ball {
+      transform: translateY(12px);
+    }
+
+    .inputLabel {
+      border: 1px solid grey;
+      padding: 4px 8px;
+      min-width: 170px;
+    }
+  }
+
+  &.mb {
+    .inputLabel {
+      margin-top: 6px;
+    }
+
+    .ball {
+      transform: translateY(9px);
+    }
+  }
+}
+
+.titleAndTime {
+  max-width: 530px;
+}
+
+.inputLabel {
+  display: inline;
+  font-size: 18px;
+  border: none;
+  padding: 0px;
+  outline: none;
+  transition: 300ms ease;
+  border-radius: 4px;
+}
+
+.inputTime {
+  display: inline-block;
+  border: none;
+  padding: 0px;
+  outline: none;
+  transition: 300ms ease;
+  border-radius: 4px;
+  font-size: 15px;
+  margin-left: 5px;
+
+  &.isEmpty {
+    border: 1px solid grey;
+    padding: 4px 8px;
+    min-width: 60px;
+    min-height: 28px;
+  }
+}
+
+.ball {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+
+  transition: 300ms ease;
+  transform: translateY(6px);
+}
+
+.participant {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+
+  margin-bottom: auto;
+
+  font-size: 16px;
+
+  &.isFilled {
+    .participantType {
+      margin-top: 0;
+    }
+
+    .input {
+      border: none;
+      padding: 0px;
+    }
+  }
+}
+
+.participantType {
+  color: #605f63;
+  margin-top: 6px;
+  outline: 0;
+  transition: 300ms ease;
+  border-radius: 4px;
+  font-size: 18px;
+
+  &.black {
+    color: black;
+  }
+
+  &.isEmpty {
+    padding: 4px 8px;
+    border: 1px solid grey;
+    margin-top: 0;
+    min-width: 100px;
+  }
+
+  &.isEmpty + .input.isFilled {
+    margin-top: 6px;
+  }
+}
+
+.input {
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid grey;
+  box-sizing: border-box;
+  padding: 4px 8px;
+  min-width: 190px;
+  max-width: 190px;
+  font-size: 18px;
+  transition: 300ms ease;
+}

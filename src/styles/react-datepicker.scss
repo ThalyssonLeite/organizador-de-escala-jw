@@ -1,0 +1,47 @@
+.react-datepicker {
+  font-family: Inter, sans-serif;
+  user-select: none;
+  border: 2px solid var(--color-purple);
+}
+
+.react-datepicker__header {
+  text-transform: capitalize;
+  background: var(--color-purple);
+  border-radius: 0px !important;
+  & * {
+    color: white;
+  }
+}
+
+.react-datepicker__navigation ::before,
+.react-datepicker__navigation:hover ::before {
+  border-color: white;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range,
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected,
+.react-datepicker__year-text--keyboard-selected {
+  background: var(--color-purple);
+  color: white !important;
+
+  &:hover {
+    background: var(--color-purple);
+  }
+}
+
+.react-datepicker__day {
+  color: #2d1058;
+}
