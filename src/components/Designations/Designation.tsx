@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { downloadText } from '../../App';
+import { downloadText } from '../Header/Submenu/handlers';
 import S from './Designation.module.scss';
 
 interface IProps {

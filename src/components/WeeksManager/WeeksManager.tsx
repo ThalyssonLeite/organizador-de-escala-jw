@@ -28,7 +28,8 @@ function WeeksManager(props: IProps) {
 
   useEffect(() => {
     if (props.weeks.length < 1) setWeekState('add');
-  }, []);
+    else setWeekState(null);
+  }, [props.weeks]);
 
   //NO MEETING REASON
   const [switchState, setSwitchState] = useState(false);
@@ -57,14 +58,13 @@ function WeeksManager(props: IProps) {
   }, [props.loading]);
 
   const goToWeek = (event: any) => {
-    const body = document.body;
     const $target = event.currentTarget;
     const weekId = $target.getAttribute('data-id');
-    const week = (body as any).querySelector(`*[id="${weekId}"]`);
+    const week: any = document.querySelector(`*[id="${weekId}"]`);
 
     const weekOffsetTop = week?.offsetTop || 0;
 
-    const $programationsWrapper: any = body.querySelector('*[data-id="programations-wrapper"]');
+    const $programationsWrapper: any = document.querySelector('*[data-id="main-content"]');
     const littlePaddingForBetterView = 20;
     const minOffsetTop = 111;
     const isFirstElement = !Boolean(week.previousElementSibling) && (weekOffsetTop === minOffsetTop);

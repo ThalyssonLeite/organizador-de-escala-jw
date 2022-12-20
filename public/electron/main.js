@@ -13,7 +13,6 @@ const createWindow = async (show = true) => {
   // Create the browser window.
   const window = new BrowserWindow({
     show: false,
-    autoHideMenuBar: true,
     webPreferences: {
       accessibleTitle: true,
       preload: path.join(__dirname, 'preload.js')
@@ -29,7 +28,8 @@ const createWindow = async (show = true) => {
   window.webContents.openDevTools()
 
   // and load the index.html of the app.
-  window.loadURL(path.resolve(__dirname, '../index.html'))
+  //window.loadURL(path.resolve(__dirname, '../index.html'))
+  window.loadURL('http://localhost:3000');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -74,7 +74,6 @@ app.whenReady().then(async () => {
  ipcMain.handle('find-final-date', async () => {
   const findFinalDate = require('../api/find-final-date');
   const date = await findFinalDate(createPage, closePage);
-  
   return date;
  });
 

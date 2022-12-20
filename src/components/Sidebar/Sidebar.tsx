@@ -9,11 +9,9 @@ interface IProps {
 function Sidebar (props: IProps) {
   return (
     <div className={S.sidebar}>
-      <BrowserRouter>
-        <Routes>
-          {props.children}
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        {props.children}
+      </Routes>
     </div>
   )
 };

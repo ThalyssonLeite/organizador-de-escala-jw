@@ -11,9 +11,11 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   gap: 30px;
 
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: calc(100vh - 71px);
   scroll-behavior: smooth;
 }

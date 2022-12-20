@@ -14,7 +14,7 @@ async function handler(createPage, closePage, _date) {
 
     //SECOND CALL TO PUPPETEER
     await page.goto(link);
-
+    
     const data = await page.evaluate(getProgramationFromBrowser, date);
 
     closePage(page);

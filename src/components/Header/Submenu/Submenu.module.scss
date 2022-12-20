@@ -1,0 +1,35 @@
+.submenu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 12px);
+  width: fit-content;
+
+  border: 2px solid #d9d9d9;
+  border-radius: 0 0 6px 6px;
+  border-width: 0 2px 2px 2px;
+  background: white;
+  transition: 200ms ease;
+  
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+
+  &.isVisible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.submenuItem {
+  padding: 12px 16px;
+  color: #666;
+  white-space: nowrap;
+  background: white;
+  transition: 200ms ease;
+
+  &:hover {
+    background: #f0f0f0;
+    color: black;
+  }
+}
