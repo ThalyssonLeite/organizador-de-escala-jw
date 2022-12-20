@@ -112,8 +112,8 @@ function Part(props: IProps) {
   };
 
   const participantType = isPresident
-    ? <strong className={classNames(S.participantType, S.black)} contentEditable onBlur={onBlurParticipantType} onFocus={onFocusParticipantType} onKeyDown={(e) => onWriteData(e, 'participantType')}>{props.data.participantType || label}</strong>
-    : <span className={S.participantType} contentEditable onBlur={onBlurParticipantType} onFocus={onFocusParticipantType} onKeyDown={(e) => onWriteData(e, 'participantType')}>{props.data.participantType || label}</span>;
+    ? <strong className={classNames(S.participantType, S.black)} contentEditable spellCheck={false} onBlur={onBlurParticipantType} onFocus={onFocusParticipantType} onKeyDown={(e) => onWriteData(e, 'participantType')}>{props.data.participantType || label}</strong>
+    : <span className={S.participantType} contentEditable spellCheck={false} onBlur={onBlurParticipantType} onFocus={onFocusParticipantType} onKeyDown={(e) => onWriteData(e, 'participantType')}>{props.data.participantType || label}</span>;
 
   const participant = (
       <div className={classNames(S.participant, {[S.isFilled]: props.data.participant})}>
@@ -147,6 +147,7 @@ function Part(props: IProps) {
             <div
               className={S.inputLabel}
               contentEditable={!props.doNotEditLabel}
+              spellCheck={false}
               onBlur={onBlurLabel}
               onFocus={onFocusLabel}
               onKeyDown={(e) => onWriteData(e, 'title')}
@@ -160,6 +161,7 @@ function Part(props: IProps) {
                 <small
                   className={S.inputTime}
                   contentEditable={!props.doNotEditLabel}
+                  spellCheck={false}
                   onBlur={onBlurTime}
                   onFocus={onFocusTime}
                   onKeyDown={(e) => onWriteData(e, 'time')}

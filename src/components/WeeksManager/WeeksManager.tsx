@@ -31,9 +31,23 @@ function WeeksManager(props: IProps) {
     else setWeekState(null);
   }, [props.weeks]);
 
-  //NO MEETING REASON
+  //SWITCH - NO MEETING REASON
   const [switchState, setSwitchState] = useState(false);
   const noMeetingInput = useRef(null);
+  const switchStyle = {
+    tabIndex: 0,
+    height: 20,
+    width: 40,
+    onColor: '#5b3c88',
+    offColor: '#6d6d6d',
+    checkedIcon: false,
+    uncheckedIcon: false,
+    activeBoxShadow: 'transparent',
+  }
+
+  useEffect(() => {
+    if (weekState === 'add') setSwitchState(false);
+  }, [weekState]);
   //
 
   const onSelectDate = (date: Date): void => {
@@ -283,22 +297,35 @@ function WeeksManager(props: IProps) {
                 />
               </div>
 
+              <div>
+                <label className={S.switcher}>
+                  <Switch
+                    {...switchStyle}
+                    checked={switchState}
+                    onChange={() => setSwitchState(!switchState)}
+                  />
+                  <span style={{color: switchState ? 'var(--color-purple)' : 'var(--color-grey)'}}>Sala B</span>
+                </label>
+                <label className={S.switcher}>
+                  <Switch
+                    {...switchStyle}
+                    checked={switchState}
+                    onChange={() => setSwitchState(!switchState)}
+                  />
+                  <span style={{color: switchState ? 'var(--color-purple)' : 'var(--color-grey)'}}>Sala C</span>
+                </label>
+              </div>
+
               <label className={S.switcher}>
                 <Switch
-                  height={20}
-                  width={40}
+                  {...switchStyle}
                   checked={switchState}
                   onChange={() => setSwitchState(!switchState)}
-                  onColor='#5b3c88'
-                  offColor='#6d6d6d'
-                  checkedIcon={false}
-                  uncheckedIcon={false}
-                  activeBoxShadow={'transparent'}
                 />
                 <span style={{color: switchState ? 'var(--color-purple)' : 'var(--color-grey)'}}>Não haverá reunião</span>
               </label>
 
-             <label className={classNames(S.noMeetingWrapper, {[S.isVisible]: switchState})}>
+             <label className={classNames(S.noMeetingWrapper, {[S.isVisible]: switchState})} tabIndex={0}>
               <span className='sr-only'>Diga o motivo</span>
               <input ref={noMeetingInput} className={S.noMeeting} placeholder='Escreva o motivo. Ex: Assembleia' spellCheck={false}/>
              </label>

@@ -17,14 +17,14 @@ function Header (props: IProps) {
 
   return (
     <>
-      <header className={S.header} onClick={() => {setBackupState(false); setDownloadState(false)}}>
+      <header className={S.header} onClick={(e) => {if ((e.target as any).closest('.'+S.menuButton)) return; setBackupState(false); setDownloadState(false)}}>
         <img className={S.logo} src='/static/icons/logo.svg'/>
 
         <div className={S.headerWrapper}>
-          <h1 className={S.title}>Organizador de Escalas JW</h1>
+          <h1 className={S.title} tabIndex={0}>Organizador de Escalas JW</h1>
           <nav className={S.menu}>
-            <div className={classNames(S.menuButton, {[S.isActive]: location.pathname === '/'})}>Escalas</div>
-            <div className={S.menuButton}>Designações</div>
+            <div className={classNames(S.menuButton, {[S.isActive]: location.pathname === '/'})} tabIndex={0}>Escalas</div>
+            <div className={S.menuButton} tabIndex={0}>Designações</div>
             <div className={S.menuDivisor}/>
               <Routes>
                 <Route
@@ -33,15 +33,17 @@ function Header (props: IProps) {
                     <>
                       { Boolean(props.weeks && props.weeks.length) &&
                         <div
+                          tabIndex={0}
                           className={
                             classNames(
                               S.menuButton,
                               {[S.isSubmenuActive]: downloadState}
                           )}
-                          onClick={(e) => {
+                          onFocus={(e) => {
                             e.stopPropagation();
-                            setDownloadState(!downloadState); setBackupState(false)}
-                          }
+                            setDownloadState(!downloadState);
+                            setBackupState(false)
+                          }}
                         >
                           Baixar
                           <i className="arrow-icon"/>
@@ -50,11 +52,12 @@ function Header (props: IProps) {
                         </div>
                       }
                       <div
+                        tabIndex={0}
                         className={classNames(
                           S.menuButton,
                           {[S.isSubmenuActive]: backupState}
                         )}
-                        onClick={(e) => {
+                        onFocus={(e) => {
                           e.stopPropagation();
                           setBackupState(!backupState);
                           setDownloadState(false);

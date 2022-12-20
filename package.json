@@ -4,7 +4,7 @@
   "author": "Thalysson Leite",
   "version": "0.1.0",
   "private": true,
-  "main": "build/electron/main.js",
+  "main": "public/electron/main.js",
   "homepage": "./",
   "scripts": {
     "start": "react-scripts start",

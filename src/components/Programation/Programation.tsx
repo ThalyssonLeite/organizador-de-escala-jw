@@ -33,7 +33,7 @@ function Programation(props: IProps) {
     >
       {
         props.data.noMeeting
-          ? <h2>{`${props.data.week[0].title} | ${props.data.noMeeting}`}</h2>
+          ? <h2 tabIndex={0}>{`${props.data.week[0].title} | ${props.data.noMeeting}`}</h2>
 
           : <>
             <Part path="weekExcerpt" data={{ ...props.data.weekExcerpt[0], title: `${props.data.week[0].title} | ${props.data.weekExcerpt[0].title}`}} doNotEditLabel={true} onWriteData={onWriteData}/>

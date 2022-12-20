@@ -60,8 +60,9 @@
   border-radius: 4px;
   cursor: pointer;
   color: #666;
+  outline: none;
 
-  &:is(:hover, .isSubmenuActive) {
+  &:is(:hover, .isSubmenuActive, :focus) {
     background: #f0f0f0;
     color: black;
   }

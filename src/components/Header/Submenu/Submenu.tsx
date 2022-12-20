@@ -52,13 +52,15 @@ function Submenu (props: IProps) {
     <div className={classNames(S.submenu, {[S.isVisible]: props.active})}>
       {submenuOptions[props.submenu].map(option => {
         return (
-          <div
+          <button
+            tabIndex={0}
             key={option.name}
             className={S.submenuItem}
+            onFocus={(e) => {e.stopPropagation()}}
             onClick={onClickHandler(option.name)}
           >
             {option.name}
-          </div>
+          </button>
       )})}
 
       <input
@@ -69,7 +71,8 @@ function Submenu (props: IProps) {
         onInput={importBackup}
         style={{
           opacity: 0,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          visibility: 'hidden'
         }}
       />
       
