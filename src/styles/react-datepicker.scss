@@ -2,6 +2,7 @@
   font-family: Inter, sans-serif;
   user-select: none;
   border: 2px solid var(--color-purple);
+  overflow: hidden;
 }
 
 .react-datepicker__header {
@@ -12,6 +13,11 @@
     color: white;
   }
 }
+
+.react-datepicker__month-container {
+  margin: -1px;
+}
+
 
 .react-datepicker__navigation ::before,
 .react-datepicker__navigation:hover ::before {

@@ -50,6 +50,13 @@ function WeeksManager(props: IProps) {
   }, [weekState]);
   //
 
+  //SWITCH - ROOMS
+  const [roomState, setRoomState] = useState({b: false, c: false});
+
+  function handleRoomState () {
+
+  };
+
   const onSelectDate = (date: Date): void => {
     const noMeeting = switchState && (noMeetingInput.current.value ? noMeetingInput.current.value : 'Não haverá reunião');
     props.addWeek(date, noMeeting);
@@ -284,7 +291,7 @@ function WeeksManager(props: IProps) {
         <div className={classNames(S.tutorialOverlay, {[S.appear]: weekState || props.loading || !props.weeks.length})}>
           { ((weekState === 'add' || !props.weeks.length) && !props.loading) &&
             <div className={S.tutorialOverlayContent}>
-              <h2>Escolha uma semana</h2>
+              <h2 tabIndex={0}>Escolha uma semana</h2>
 
               <div className={S.datePicker}>
                 <DatePicker
@@ -297,7 +304,7 @@ function WeeksManager(props: IProps) {
                 />
               </div>
 
-              <div>
+              <div style={{display: 'flex', width: '100%'}}>
                 <label className={S.switcher}>
                   <Switch
                     {...switchStyle}
@@ -325,16 +332,16 @@ function WeeksManager(props: IProps) {
                 <span style={{color: switchState ? 'var(--color-purple)' : 'var(--color-grey)'}}>Não haverá reunião</span>
               </label>
 
-             <label className={classNames(S.noMeetingWrapper, {[S.isVisible]: switchState})} tabIndex={0}>
-              <span className='sr-only'>Diga o motivo</span>
+             <label className={classNames(S.noMeetingWrapper, {[S.isVisible]: switchState})}>
               <input ref={noMeetingInput} className={S.noMeeting} placeholder='Escreva o motivo. Ex: Assembleia' spellCheck={false}/>
+              <span className='sr-only'>Diga o motivo</span>
              </label>
             </div>
           }
 
            { props.loading &&
             <div className={S.tutorialOverlayContent}>
-              <h2>Carregando sua semana</h2>
+              <h2 tabIndex={0}>Carregando sua semana</h2>
 
               <div
                 tabIndex={0}
@@ -347,13 +354,13 @@ function WeeksManager(props: IProps) {
 
           { weekState === 'organize' &&
             <div className={S.tutorialOverlayContent}>
-              <h2>Arraste para organizar</h2>
+              <h2 tabIndex={0}>Arraste para organizar</h2>
             </div>
           }
 
           { weekState === 'delete' &&
             <div className={S.tutorialOverlayContent}>
-              <h2>Selecione para excluir</h2>
+              <h2 tabIndex={0}>Selecione para excluir</h2>
             </div>
           }
         </div>
