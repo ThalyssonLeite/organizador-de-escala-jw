@@ -30,11 +30,12 @@
   transition: 200ms ease;
   outline: none;
 
-  font-size: Inter, sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   width: 100%;
   text-align: left;
+  cursor: pointer;
 
   &:is(:hover, :focus) {
     background: #f0f0f0;

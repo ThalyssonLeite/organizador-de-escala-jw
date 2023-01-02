@@ -6,6 +6,14 @@
 
   width: 100%;
   padding-left: 16px;
+
+  &.isMultipleRoom {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 265px;
+
+    margin-right: 4px;
+  }
 }
 
 .label {
@@ -34,7 +42,7 @@
     }
 
     .ball {
-      transform: translateY(9px);
+      transform: translateY(10px);
     }
   }
 }
@@ -45,7 +53,7 @@
 
 .inputLabel {
   display: inline;
-  font-size: 18px;
+  font-size: var(--fontSize);
   border: none;
   padding: 0px;
   outline: none;
@@ -62,6 +70,7 @@
   border-radius: 4px;
   font-size: 15px;
   margin-left: 5px;
+  width: fit-content;
 
   &.isEmpty {
     border: 1px solid grey;
@@ -78,7 +87,7 @@
   border-radius: 8px;
 
   transition: 300ms ease;
-  transform: translateY(6px);
+  transform: translateY(9px);
 }
 
 .participant {
@@ -109,10 +118,11 @@
   outline: 0;
   transition: 300ms ease;
   border-radius: 4px;
-  font-size: 18px;
+  font-size: var(--fontSize);
 
-  &.black {
+  &.isBlack {
     color: black;
+    font-weight: bold;
   }
 
   &.isEmpty {
@@ -135,6 +145,49 @@
   padding: 4px 8px;
   min-width: 190px;
   max-width: 190px;
-  font-size: 18px;
+  font-size: var(--fontSize);
   transition: 300ms ease;
+}
+
+.roomsContainer {
+  border: 1px solid var(--sectionColor);
+  border-radius: 4px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  margin-right: 4px;
+}
+
+.room {
+  display: flex;
+
+  &:last-child .roomParticipant {
+    border-bottom: none !important;
+  }
+}
+
+.roomName {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-size: var(--fontSize);
+  color: white;
+  background: var(--sectionColor);
+  font-weight: 400;
+  padding: 4px;
+  min-width: 75px;
+}
+
+.roomParticipant {
+  @extend .input;
+  padding: 4px !important;
+  border-color: var(--sectionColor);
+  border-radius: 0px;
+  border: none;
+  border-bottom: 1px solid var(--sectionColor) !important;
+
+  &.bordered {
+    border: 1px solid var(--sectionColor) !important;
+    border-radius: 4px;
+  }
 }

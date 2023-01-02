@@ -6,10 +6,11 @@ interface IProps {
   path?: 'treasures' | 'ministry' | 'cristianLife' | 'songs' | 'week' | 'weekExcerpt' | 'comments';
   index?: number;
   data: any;
-  doNotPray?: boolean;
+  noParticipant?: boolean;
   doNotEditLabel?: boolean;
   section?: 'treasures' | 'ministry' | 'cristianLife';
   onWriteData: any; 
+  rooms: {b: boolean, c: boolean};
 }
 
 function Part(props: IProps) {
@@ -39,7 +40,9 @@ function Part(props: IProps) {
   const isStudy = search('estudo bíblico de congregação');
   const isPresident = search(' | ');
 
-  if (isPrayer) {
+  if (props.data.participantType) {
+    label = props.data.participantType;
+  } else if (isPrayer) {
     label = 'Oração:'
   } else if (isStudent) {
     label = 'Estudante:'
@@ -103,23 +106,39 @@ function Part(props: IProps) {
     $target.classList.add(S.isEmpty);
   };
 
-  const onWriteData = (e: any, type: string) => {
+  const onWriteData = (e: any, type: string, roomIndex: number = 0) => {
     const target = e.currentTarget;
 
     setTimeout(() => {
-      props.onWriteData(props.path, props.index,  type, typeof e === 'string' ? e : target.innerText);
+      props.onWriteData(props.path, props.index,  type, typeof e === 'string' ? e : target.innerText, roomIndex);
     }, 300)
   };
 
-  const participantType = isPresident
-    ? <strong className={classNames(S.participantType, S.black)} contentEditable spellCheck={false} onBlur={onBlurParticipantType} onFocus={onFocusParticipantType} onKeyDown={(e) => onWriteData(e, 'participantType')}>{props.data.participantType || label}</strong>
-    : <span className={S.participantType} contentEditable spellCheck={false} onBlur={onBlurParticipantType} onFocus={onFocusParticipantType} onKeyDown={(e) => onWriteData(e, 'participantType')}>{props.data.participantType || label}</span>;
+  const participantType = (
+    <span
+        className={classNames(S.participantType, {[S.isBlack]: isPresident})}
+        contentEditable
+        spellCheck={false}
+        onBlur={onBlurParticipantType}
+        onFocus={onFocusParticipantType}
+        onKeyDown={(e) => onWriteData(e, 'participantType')}
+      >
+        {label}
+      </span>
+  )
+
+  const justRoomA = !props.rooms.b && !props.rooms.c;
 
   const participant = (
-      <div className={classNames(S.participant, {[S.isFilled]: props.data.participant})}>
-        {label && participantType}
+      <div
+        className={classNames(
+          S.participant,
+          {[S.isFilled]: props.data.participant[0]}
+        )}
+      >
+        {(label && (justRoomA || label !== 'Estudante:') ) && participantType}
       
-        <div
+        {(justRoomA || (label !== 'Estudante:' && props.path !== 'ministry')) && (<div
           contentEditable
           spellCheck="false"
           className={S.input}
@@ -127,8 +146,70 @@ function Part(props: IProps) {
           onFocus={onFocusParticipant}
           onKeyDown={(e) => onWriteData(e, 'participant')}
         >
-          { props.data.participant || ''}
-        </div>
+          { props.data.participant[0] || ''}
+        </div>)}
+
+        {(!justRoomA && props.path === 'ministry' && label !== 'Estudante:') && (
+          <div
+            className={S.roomsContainer}
+          >
+            <div className={S.room}>
+              <div className={S.roomName}>Sala A</div>
+              <div
+                className={S.roomParticipant}
+                contentEditable={!props.doNotEditLabel}
+                spellCheck={false}
+                onKeyDown={(e) => onWriteData(e, 'participant')}
+              >
+                {props.data.participant[0]}
+              </div>
+            </div>
+           </div> 
+        )}
+
+        {(!justRoomA && label === 'Estudante:') && (
+          <div
+            className={S.roomsContainer}
+          >
+
+            <div className={S.room}>
+              <div className={S.roomName}>Sala A</div>
+              <div
+                className={S.roomParticipant}
+                contentEditable={!props.doNotEditLabel}
+                spellCheck={false}
+                onKeyDown={(e) => onWriteData(e, 'participant')}
+              >
+                {props.data.participant[0]}
+              </div>
+            </div>
+
+            <div className={S.room}>
+              <div className={S.roomName}>Sala B</div>
+              <div
+                className={S.roomParticipant}
+                contentEditable={!props.doNotEditLabel}
+                spellCheck={false}
+                onKeyDown={(e) => onWriteData(e, 'participant', 1)}
+              >
+                {props.data.participant[1]}
+              </div>
+            </div>
+
+            {props.rooms.c && (
+              <div className={S.room}>
+                <div className={S.roomName}>Sala C</div>
+                <div
+                  className={S.roomParticipant}
+                  contentEditable={!props.doNotEditLabel}
+                  spellCheck={false}
+                  onKeyDown={(e) => onWriteData(e, 'participant', 2)}
+                >
+                  {props.data.participant[2]}
+                </div>
+            </div>)}
+          </div>
+        )}
     </div>
   );
 
@@ -139,7 +220,7 @@ function Part(props: IProps) {
   }, []);
 
   return (
-    <div className={S.part}>
+    <div className={classNames(S.part, {[S.isMultipleRoom]: !justRoomA && (props.path === 'ministry' || (props.path === 'treasures' && label === 'Estudante:'))})} style={({'--sectionColor': color} as any)}>
       <div className={classNames(S.label, {[S.isPresident]: isPresident})}>
          {!isPresident && ball}
 
@@ -169,12 +250,9 @@ function Part(props: IProps) {
               )
             }
           </div>
-
       </div>
 
-        
-
-      {!props.doNotPray && participant}
+      {!props.noParticipant && participant}
       
     </div>
   );

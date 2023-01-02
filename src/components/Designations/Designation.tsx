@@ -6,26 +6,12 @@ import S from './Designation.module.scss';
 interface IProps {
   state: boolean;
   toggleState: (state: boolean) => void;
+  setDesignations: (designations: any) => void;
+  designations: any;
 }
 
 function Desgination(props: IProps) {
-  const copyToClipboard = async (e: any) => {
-    const target = e.currentTarget;
-
-    const designation = target
-      .closest('.'+S.card)
-      .querySelector('.'+S.designation)
-      .innerText;
-
-    await navigator
-      .clipboard
-      .writeText(designation)
-
-    target.classList.add(S.isCopied);
-    setTimeout(() => target.classList.remove(S.isCopied), 2500);
-  };
-
-  const [designations, setDesignations] = useState<any[]>([]);
+  const {designations} = props;
 
   useEffect(() => {
     document.body.style.overflow = props.state ? 'hidden' : 'auto';
@@ -33,91 +19,130 @@ function Desgination(props: IProps) {
     const weeksFromLS = JSON.parse(localStorage.getItem('weeks') || '[]');
 
     const parts = weeksFromLS.flatMap((week: any) => {
-      const bibleReader = week.treasures.pop();
+      const bibleReader = (
+        week.treasures[week.treasures.length - 1].participant
+          ? [
+              {
+                ...week.treasures.pop(week.treasures.length - 1),
+                week: week.week[0].title
+              }
+            ]
+          : []
+      );
+
+      const ministry = week.ministry
+        .filter((part: any) => {
+          return part.participantType && part.participant.length
+        })
+        .map((part: any) => {
+          return {
+            ...part,
+            week: week.week[0].title 
+          };
+        });
 
       return [
-        ...(bibleReader.participant ? [{ ...bibleReader, week: week.week[0].title }] : []),
-        ...week.ministry.filter((part: any) => part.participantType && part.participant).map((part: any) => ({ ...part, week: week.week[0].title })),
+        ...bibleReader,
+        ...ministry,
       ]
     });
 
-    const participants: {to: any, designations?: any}[] = [...new Set(parts.flatMap((part: any) => {
-      return part
-        .participant
-        .split('/')
-        .map((text: string) => text.trim())
-        .filter((text: string) => text);
-    }))].map(participant => ({ to: participant }));
+    let participants: any = {};
 
-    participants.forEach((participant, i) => {
-      const partsWith = parts.filter((part: any) => part.participant.includes(participant.to));
+    parts.forEach(part => {
+      part.participant.forEach((participant: string, i: number) => {
+        const separators = ['/', `\\`, '|', ',', ':', ';', '-', ' e '];
 
-      participants[i].designations = partsWith;
+        const separator = separators.find(separator => participant.includes(separator));
+
+        const participantsOfThisPart = Boolean(separator) 
+          ? participant.split(separator).map(separator => separator.trim())
+          : [participant.trim()];
+
+        participantsOfThisPart.forEach(string => string.trim());
+
+        participantsOfThisPart.forEach((participantOfThisPart: string) => {
+          participants = {
+            ...participants,
+            [participantOfThisPart]: [
+              ...(participants[participantOfThisPart] || []),
+              {
+                week: part.week,
+                participants: participant,
+                title: part.title,
+                plural: separator,
+                room: i === 0
+                  ? 'A'
+                  : i === 1
+                    ? 'B'
+                    : 'C'
+              }
+            ]
+          }
+        });
+      });
     });
-    
-    setDesignations(participants);
+
+    let sortedParticipants: any = Object.entries(participants)
+    sortedParticipants.sort((a: any[], b: any[]) => {
+      return b[1].length - a[1].length
+    });
+
+    props.setDesignations(() => (Object.fromEntries(sortedParticipants) as any));
+
+    //This line below serves to get the data to download designations as text
   }, [props.state]);
-
-  const saveAsTXT = () => {
-    const text = `${designations.map((participant, i) => {
-      return `${i ? '\n\n' : ''}Designação para: ${participant.to}
-        ${participant.designations.map((designation: any, i: number) => {
-          return `
-Semana: ${designation?.week}
-Parte: ${designation?.title}
-Designados: ${designation?.participant}\n`
-        }).join('')}`
-    }).join('')}`
-
-    downloadText('Designações de Meio de Semana TXT', text);
-  };
+  
+  localStorage.setItem('designations', JSON.stringify(designations));
+  
+  const designationKeys = Object.keys(designations);
+  const justRoomA = designationKeys
+  .flatMap(key => designations[key])
+  .every(part => part.room === 'A');
 
   return (
-    <div className={classNames(S.wrapper, {[S.isVisible]: props.state})}>
-      <button tabIndex={0} className={S.close} onClick={() => props.toggleState(!props.state)}>
-        <i className="close-icon"></i>
-        <span className='sr-only'>Fechar Designações</span>
-      </button>
-
+    <div className={S.wrapper}>
       {
-        designations.length
-          ? <button className={S.saveAs} onClick={saveAsTXT}>Salvar como TXT</button>
-          : <div className={S.card}>
-            Você ainda não designou nenhum estudante da Escola
-          </div>
-      }
-
-      {
-        designations.map((participant, i) => {
+        designationKeys.map((participantKey: string, i: number) => {
           return (
-            <div className={S.card} key={participant.to}>
-              <div className={S.designation}>
-              Designação para: {participant.to}<br/><br/>
-
-              {
-                participant.designations.map((designation: any, i: number) => {
-                  return (
-                    <>
-                      Semana: {designation?.week}<br/>
-                      Parte: {designation?.title}<br/>
-                      Designados: {designation?.participant}<br/>
-
-                      {
-                        participant.designations.length > 1 &&
-                        !((participant.designations.length - 1) === i) &&
-                        <br/>
-                      }
-                    </>
-                  )
-                })
-              }
+            <>
+              <div
+                designation-id={participantKey}
+                className={classNames(
+                S.cardWrapper,
+              )}>
+                <div className={S.card}
+                  key={participantKey}
+                >
+                  <div className={S.designation}>
+                  <strong>Designação para {participantKey}</strong><br/><br/>
+                  {
+                    designations[participantKey].map((designation: any, i: number) => {
+                      return (
+                        <div>
+                          <strong>Semana:</strong> {designation?.week}<br/>
+                          <strong>Parte:</strong> {designation?.title}<br/>
+                          <strong>Designado{designation.plural ? 's' : ''}:</strong> {designation?.participants}<br/>
+                          {!justRoomA && (
+                            <><strong>Sala:</strong> {designation?.room}<br/></>
+                          )}
+                          {
+                            (designations[participantKey].length > 1 &&
+                            !((designations[participantKey].length - 1) === i)) &&
+                            <br/>
+                          }
+                        </div>
+                      )
+                    })
+                  }
+                  </div>
+                </div>
               </div>
 
-              <button className={S.copy} onClick={copyToClipboard}>
-                <span className={S.copyBefore}>Copiar Designação <span className='sr-only'>de {participant.to}</span></span>
-                <span className={S.copyAfter}>Designação Copiada!</span>
-              </button>
-            </div>
+              {(designations[participantKey].length
+                >
+              (designations[designationKeys[i + 1]]||[0]).length) && <div/>}
+            </>
           )
         })
       }

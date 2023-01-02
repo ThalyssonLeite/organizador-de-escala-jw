@@ -32,9 +32,9 @@ function ManageButtonGroup (props: IProps) {
   );
 
   const organizeButton = (title?: string) => (
-    <button className={classNames(S.manageButton, {[S.isDisabled]: weeks.length <= 1})} title={title || 'Mudar ordem'} onClick={() => setWeekState('organize')}>
+    <div className={classNames(S.manageButton, {[S.isDisabled]: weeks.length <= 1})} title={title || 'Mudar ordem'} onClick={() => setWeekState('organize')}>
         <i className={classNames(S.manageButtonIcon, 'drag-icon')}/>
-    </button>
+    </div>
   );
 
   const deleteButton = (title?: string, applyChanges?: () => void) => (

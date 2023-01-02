@@ -1,13 +1,19 @@
 .programation {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  --gap: 8px;
+  --fontSize: 16px;
+  gap: var(--gap);
 
   width: 100%;
   padding: 20px;
 
   &.paddingTop {
     padding-top: 40px;
+  }
+
+  &.marginBottom {
+    margin-top: 20px;
   }
 
   &.isNoMeeting {
@@ -19,6 +25,14 @@
     min-height: 639px;
     max-height: 639px;
     margin-bottom: 20px;
+  }
+
+  &.isRoomB {
+    --gap: 4px;
+  }
+
+  &.isRoomC {
+    --gap: 2px;
   }
 
   &:first-child {
@@ -42,11 +56,13 @@
 }
 
 .treasuresSection {
+  --mainColor: #626262;
   display: flex;
   align-items: center;
   gap: 16px;
-  color: #626262;
+  color: var(--mainColor);
   font-size: 28px;
+  font-weight: 700;
 
   &::before {
     content: "\e65c";
@@ -61,48 +77,42 @@
     font: 400 40px 'jw-icons-external';
     color: #fff;
     line-height: 40px;
-    background: #626262;
+    background: var(--mainColor);
   }
+
+  &.isRoomB {
+    color: white;
+    background: var(--mainColor);
+    height: 24px;
+    font-size: 18px;
+    padding-left: 20px;
+    border-radius: 4px;
+    font-weight: 600;
+
+    &::before {display: none};
+  };
 }
 
 .ministrySection {
   @extend .treasuresSection;
-  color: #c38439;
+  --mainColor: #c38439;
 
   &::before {
     content: "\e6bb";
-    flex-shrink: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 56px;
-    width: 56px;
-
-    font: 400 40px 'jw-icons-external';
-    color: #fff;
-    line-height: 40px;
-    background: #c38439;
   }
 }
 
 .cristianSection {
   @extend .treasuresSection;
-  color: #942926;
+  --mainColor: #942926;
 
   &::before {
     content: "\e6ec";
-    flex-shrink: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 56px;
-    width: 56px;
-
-    font: 400 40px 'jw-icons-external';
-    color: #fff;
-    line-height: 40px;
-    background: #942926;
   }
+}
+
+.ministryPartsWrapper {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }

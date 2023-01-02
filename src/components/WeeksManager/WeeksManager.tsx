@@ -11,7 +11,7 @@ import DragDropSort from '../../libs/drag-drop-sort';
 
 interface IProps {
   weeks: any[];
-  addWeek: (week: any, noMeeting: false | string) => any;
+  addWeek: (week: any, noMeeting: false | string, roomState: {b: boolean, c: boolean}) => any;
   setWeeks: (weeks: any) => any;
   loading: boolean;
   removeWeek: (index: number) => any;
@@ -21,14 +21,16 @@ interface IProps {
 type TWeekState = 'add' | 'organize' | 'delete' | null;
 
 function WeeksManager(props: IProps) {
-  const [weekState, setWeekState] = useState<TWeekState>(props.weeks.length < 1
-    ? null
-    : 'add'
+  const [weekState, setWeekState] = useState<TWeekState>(JSON.parse(localStorage.getItem('weeks') || '[]').length < 1
+    ? 'add'
+    : null
   );
 
   useEffect(() => {
-    if (props.weeks.length < 1) setWeekState('add');
-    else setWeekState(null);
+    const weeks = JSON.parse(localStorage.getItem('weeks') || '[]');
+
+    if (weeks.length < 1) setWeekState('add');
+    else if (weekState !== 'organize') setWeekState(null);
   }, [props.weeks]);
 
   //SWITCH - NO MEETING REASON
@@ -51,15 +53,22 @@ function WeeksManager(props: IProps) {
   //
 
   //SWITCH - ROOMS
-  const [roomState, setRoomState] = useState({b: false, c: false});
+  const roomStateLocalStorage = JSON.parse(localStorage.getItem('roomState') || '{"b": false, "c": false}');
+  const [roomState, setRoomState] = useState(roomStateLocalStorage);
 
-  function handleRoomState () {
+  function handleRoomState (room: 'b' | 'c') {
+    const newRoomState = {
+      ...roomState,
+      [room]: !roomState[room],
+    };
 
+    setRoomState(() => newRoomState);
+    localStorage.setItem('roomState', JSON.stringify(newRoomState));
   };
 
   const onSelectDate = (date: Date): void => {
     const noMeeting = switchState && (noMeetingInput.current.value ? noMeetingInput.current.value : 'Não haverá reunião');
-    props.addWeek(date, noMeeting);
+    props.addWeek(date, noMeeting, roomState);
     setSwitchState(false);
 
     //makes selected on the calendar the last date chosen
@@ -68,7 +77,7 @@ function WeeksManager(props: IProps) {
 
   useEffect(() => {
     //if you just finished to load a new week...
-    if (!props.loading && weekState === 'add') {
+    if (props.loading === false && weekState === 'add') {
       setWeekState(null);
       setTimeout(() => {
         const weeksContainer = containerOfWeeks.current;
@@ -85,24 +94,24 @@ function WeeksManager(props: IProps) {
 
     const weekOffsetTop = week?.offsetTop || 0;
 
-    const $programationsWrapper: any = document.querySelector('*[data-id="main-content"]');
+    const $mainContent: any = document.querySelector('*[data-id="main-content"]');
     const littlePaddingForBetterView = 20;
-    const minOffsetTop = 111;
+    const minOffsetTop = 40;
     const isFirstElement = !Boolean(week.previousElementSibling) && (weekOffsetTop === minOffsetTop);
     
     const indexIsOdd = Array.from(week.parentElement.childNodes).findIndex(child => child === week) % 2 !== 0;
     
     if (isFirstElement) {
       smoothScroll.to(0, {
-        context: $programationsWrapper,
+        context: $mainContent,
       });
     } else if (indexIsOdd) {
-      smoothScroll.to(weekOffsetTop - littlePaddingForBetterView - 71, {
-        context: $programationsWrapper,
+      smoothScroll.to(weekOffsetTop - littlePaddingForBetterView, {
+        context: $mainContent,
       });
     } else {
-      smoothScroll.to(weekOffsetTop - 71, {
-        context: $programationsWrapper,
+      smoothScroll.to(weekOffsetTop, {
+        context: $mainContent,
       });
     }
   }
@@ -227,13 +236,14 @@ function WeeksManager(props: IProps) {
         >
           {props.weeks.map((data, i) => {
             return (
-              <div
+              <button
                 data-id={data.id}
                 tabIndex={0}
                 key={data.id}
-                className={classNames(S.week, {[S.isAddMode]: weekState === 'add'}, {[S.isNoMeeting]: Boolean(data.noMeeting)})}
+                title={weekState === null && "Clique para rolar"}
+                className={classNames(S.week, {[S.isNoEvents]: weekState === 'add', [S.isNoMeeting]: Boolean(data.noMeeting), [S.isNoInteration]: weekState === 'organize'})}
                 onClick={
-                  !weekState
+                  (weekState === null)
                     ? goToWeek
                     : weekState === 'delete'
                       ? handleOnSelectWeekOnDeleteMode
@@ -258,7 +268,7 @@ function WeeksManager(props: IProps) {
                     <span className='sr-only'>Excluir Semana {data.week[0].title}</span>
                   </button>)
                 }
-              </div>
+              </button>
               )
           })}
 
@@ -267,7 +277,7 @@ function WeeksManager(props: IProps) {
             (
               <div
                 tabIndex={0}
-                className={classNames(S.week, S.isAddMode)}
+                className={classNames(S.week, S.isNoEvents)}
               >
                 <div className={classNames("loading-icon", S.loadingIcon)} tabIndex={0} drag-type='key'>
                   <span className='sr-only'>Carregando nova semana</span>
@@ -308,18 +318,18 @@ function WeeksManager(props: IProps) {
                 <label className={S.switcher}>
                   <Switch
                     {...switchStyle}
-                    checked={switchState}
-                    onChange={() => setSwitchState(!switchState)}
+                    checked={roomState['b']}
+                    onChange={() => handleRoomState('b')}
                   />
-                  <span style={{color: switchState ? 'var(--color-purple)' : 'var(--color-grey)'}}>Sala B</span>
+                  <span style={{color: roomState['b'] ? 'var(--color-purple)' : 'var(--color-grey)'}}>Sala B</span>
                 </label>
                 <label className={S.switcher}>
                   <Switch
                     {...switchStyle}
-                    checked={switchState}
-                    onChange={() => setSwitchState(!switchState)}
+                    checked={roomState['c']}
+                    onChange={() => handleRoomState('c')}
                   />
-                  <span style={{color: switchState ? 'var(--color-purple)' : 'var(--color-grey)'}}>Sala C</span>
+                  <span style={{color: roomState['c'] ? 'var(--color-purple)' : 'var(--color-grey)'}}>Sala C</span>
                 </label>
               </div>
 

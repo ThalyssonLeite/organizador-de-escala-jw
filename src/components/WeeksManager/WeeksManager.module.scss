@@ -6,6 +6,8 @@
   gap: 8px;
   
   width: 100%;
+
+  font-family: Inter;
 }
 
 .week {
@@ -25,10 +27,34 @@
   font-weight: 400;
   user-select: none;
   overflow: hidden;
+  box-shadow: inset 0 0 18px -4px #0c0f3a63;
+  word-break: break-word;
 
   cursor: pointer;
   transition: 200ms ease;
 
+  
+  &.isMarkedToDelete {
+    background: #AD2F2B !important;
+    
+    &:hover {
+      background: #ca332e !important;
+    }
+  }
+  
+  &.isNoEvents {
+    pointer-events: none;
+  }
+  
+  &.isNoInteration {
+    background: #5b3c88;
+    cursor: unset;
+    
+    &:hover {
+      background: #5b3c88;
+    }
+  }
+  
   &.isNoMeeting {
     background: #bd8646;
 
@@ -37,16 +63,8 @@
     } 
   }
 
-  &.isMarkedToDelete {
-    background: #AD2F2B !important;
-
-    &:hover {
-      background: #ca332e !important;
-    }
-  }
-
-  &.isAddMode {
-    pointer-events: none;
+  &.isNoMeeting.isNoInteration:hover {
+    background: #bd8646;
   }
 
   .loadingIcon {
@@ -105,6 +123,7 @@
   width: 100%;
   align-items: center;
   font-size: 16px;
+  font-weight: 700;
 }
 
 .noMeetingWrapper {

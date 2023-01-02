@@ -2,17 +2,19 @@ import classNames from 'classnames';
 import React, { useRef } from 'react';
 import S from './Submenu.module.scss';
 import {
-  downloadScaleAsPDF,
-  downloadScaleAsPNG,
+  downloadAsPDF,
+  downloadAsPNG,
   downloadScalesAsText,
+  downloadDesignationsAsText,
   importBackup,
   saveBackupHandler
 } from './handlers';
 
 interface IProps {
-  submenu: string;
-  active: boolean;
+  path: string;
   weeks?: any[];
+  active: boolean;
+  submenu: string;
   setWeeks: (weeks: any[]) => void;
 }
 
@@ -36,17 +38,27 @@ function Submenu (props: IProps) {
 
   let onClickHandler: any = (option: string) => {};
 
-  if (props.submenu === 'backup' && importInput.current) {
-    onClickHandler = (option: string) => option === 'Salvar'
-      ? saveBackupHandler
-      : importInput.current.click.bind(importInput.current);
+  //SCALES
+  if (props.path === '/') {
+    if (props.submenu === 'backup' && importInput.current) {
+      onClickHandler = (option: string) => option === 'Salvar'
+        ? saveBackupHandler
+        : importInput.current.click.bind(importInput.current);
+    } else {
+      onClickHandler = (option: string) => option.includes('.pdf')
+        ? downloadAsPDF
+        : option.includes('.txt')
+          ? downloadScalesAsText
+          : downloadAsPNG;
+    };
+  //DESIGNATION
   } else {
     onClickHandler = (option: string) => option.includes('.pdf')
-      ? downloadScaleAsPDF
-      : option.includes('.txt')
-        ? downloadScalesAsText
-        : downloadScaleAsPNG;
-  };
+    ? downloadAsPDF
+    : option.includes('.txt')
+      ? downloadDesignationsAsText
+      : downloadAsPNG;
+  }
 
   return (
     <div className={classNames(S.submenu, {[S.isVisible]: props.active})}>
@@ -56,8 +68,17 @@ function Submenu (props: IProps) {
             tabIndex={0}
             key={option.name}
             className={S.submenuItem}
-            onFocus={(e) => {e.stopPropagation()}}
-            onClick={onClickHandler(option.name)}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              (e.target as any).focus();
+              (e.target as any).blur();
+              onClickHandler(option.name)();
+            }}
+            onFocus={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
           >
             {option.name}
           </button>

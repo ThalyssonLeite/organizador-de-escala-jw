@@ -5,7 +5,7 @@ function getLinkFromBrowser (date)  {
     const currentDate = new Date(date);
     const startDate = new Date(currentDate.getFullYear(), 0, 1);
     const oneDayInMiliseconds = 24 * 60 * 60 * 1000;
-    const days = Math.floor((+currentDate - +startDate - oneDayInMiliseconds) / oneDayInMiliseconds);
+    const days = Math.floor((+currentDate - +startDate) / oneDayInMiliseconds);
          
     const weekNumber = Math.ceil(days / 7);
     return weekNumber;
@@ -33,24 +33,24 @@ function getProgramationFromBrowser () {
   const programationTree = {
     id: crypto.randomUUID().slice(0,6),
     songs: [
-      { title: getTextFrom('#section1 #p3 a') },
+      { title: getTextFrom('#section1 #p3 a'), participant: [] },
       { title: Array.from($4sectionNodes.shift()?.querySelectorAll('strong') || [])
         .map(node => removeDirt(node.textContent))
-        .filter(text => text)[0] },
+        .filter(text => text)[0], participant: [] },
       { title: Array.from($4sectionNodes.pop()?.querySelectorAll('strong') || [])
         .map(node => removeDirt(node.textContent))
-        .filter(text => text)[0] },
+        .filter(text => text)[0], participant: [] },
     ],
     comments: [
-      { title: 'Comentários iniciais', time: '(1 min)'},
-      { title: 'Comentários finais', time: '(3 min)'},
+      { title: 'Comentários iniciais', time: '(1 min)', participant: []},
+      { title: 'Comentários finais', time: '(3 min)', participant: []},
     ],
-    week: [{ title: getTextFrom('header #p1 strong') }],
-    weekExcerpt: [{ title: getTextFrom('header #p2 strong') }],
+    week: [{ title: getTextFrom('header #p1 strong'), participant: [] }],
+    weekExcerpt: [{ title: getTextFrom('header #p2 strong'), participant: [] }],
     treasures: [
-      { title: getManyTextsFrom('#section2 #p6 strong').join(''), time: '(10 min)' },
-      { title: 'Joias espirituais', time: '(10 min)' },
-      { title: "Leitura da Bíblia", time: '(4 min)' }
+      { title: getManyTextsFrom('#section2 #p6 strong').join(''), time: '(10 min)', participant: [] },
+      { title: 'Joias espirituais', time: '(10 min)', participant: [] },
+      { title: "Leitura da Bíblia", time: '(4 min)', participant: [] }
     ],
     ministry: getChildrenFrom('#section3 ul').map((li) => {
       const title = Array
@@ -60,13 +60,17 @@ function getProgramationFromBrowser () {
 
       return {
         title: removeDirt(title),
-        time: removeDirt((li.children[0].textContent?.match(/\(.+?\)/) || [])[0])
+        time: removeDirt([...li.childNodes].filter(node => node.tagName !== 'STRONG').map(node => node.textContent).join('').match(/\(.+?\)/)?.[0]),
+        participant: []
       };
     }),
     cristianLife: $4sectionNodes.map(node => {
+      const title = removeDirt(Array.from(node.querySelectorAll('strong'))?.map(strong => strong.textContent).filter(text => text).join(''));
+
       return {
-        title: Array.from(node.querySelectorAll('strong'))?.map(strong => removeDirt(strong.textContent)).filter(text => text).join(''),
-        time: removeDirt(node.textContent?.match(/\(.+?\)/)?.[0])
+        title,
+        time: removeDirt([...node.querySelector('strong').parentElement.childNodes].filter(node => node.tagName !== 'STRONG').map(node => node.textContent).join('').match(/\(.+?\)/)?.[0]),
+        participant: []
       }
     })
   };

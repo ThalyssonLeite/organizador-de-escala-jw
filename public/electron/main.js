@@ -13,6 +13,8 @@ const createWindow = async (show = true) => {
   // Create the browser window.
   const window = new BrowserWindow({
     show: false,
+    minWidth: 750,
+    minHeight: 400,
     webPreferences: {
       accessibleTitle: true,
       preload: path.join(__dirname, 'preload.js')
@@ -20,10 +22,8 @@ const createWindow = async (show = true) => {
   })
 
 
-  if (show) {
     window.maximize();
     window.show();
-  };
 
   window.webContents.openDevTools()
 
